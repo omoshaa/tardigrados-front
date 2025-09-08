@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tardígrados</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+  <h1>Mapa dos Tardígrados</h1>
+  <div id="map"></div>
+
+  <form id="form">
+    <input type="text" id="genero" placeholder="Gênero" required>
+    <input type="number" id="quantidade" placeholder="Quantidade" required>
+    <input type="number" id="raio" placeholder="Raio do ambiente (m)" required>
+    <input type="file" id="foto" accept="image/*" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
