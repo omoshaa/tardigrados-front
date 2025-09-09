@@ -1,24 +1,304 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
+:root {
+  --primary-color: #1a4c6b;
+  --secondary-color: #2980b9;
+  --accent-color: #e74c3c;
+  --background-color: #f5f6fa;
+  --text-color: #2c3e50;
 }
 
-h1 {
-  margin: 20px 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.navbar {
+  background-color: var(--primary-color);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  /* Aumentando o z-index para ficar acima dos controles do mapa */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 2rem;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #3498db;
+}
+
+section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#map-section {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
 }
 
 #map {
   height: 400px;
-  margin: 20px;
   border-radius: 10px;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
+  /* Garantindo que o mapa e seus controles fiquem abaixo da navbar */
+}
+
+/* Ajustando os controles do mapa */
+.leaflet-control-container .leaflet-top {
+  top: 70px;
+  /* Ajuste este valor de acordo com a altura da sua navbar */
+}
+
+.about-content {
+  display: flex;
+  gap: 2rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.about-image {
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text ul {
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.stat-box {
+  background: white;
+  padding: 1.5rem 3rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.stat-box span {
+  font-size: 2.5rem;
+  color: var(--secondary-color);
+  font-weight: bold;
+  display: block;
 }
 
 form {
-  margin: 20px auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+input,
+textarea {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.coordinates-container {
   display: flex;
-  flex-direction: column;
   gap: 10px;
-  width: 300px;
+}
+
+.coordinates-container input {
+  flex: 1;
+}
+
+#getLocation {
+  padding: 0.8rem;
+  background: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.file-upload {
+  margin-bottom: 1rem;
+}
+
+.file-upload label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  background: var(--secondary-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+#image-preview {
+  margin-top: 1rem;
+  max-width: 300px;
+}
+
+#image-preview img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  background: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #2471a3;
+}
+
+footer {
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+#notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 1rem;
+  border-radius: 5px;
+  display: none;
+  z-index: 1000;
+}
+
+.success {
+  background: #2ecc71;
+  color: white;
+}
+
+.error {
+  background: var(--accent-color);
+  color: white;
+}
+
+.coordinates-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.coordinate-inputs {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+#getLocation {
+  padding: 10px;
+  background: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+#getLocation:hover {
+  background: #45a049;
+}
+
+small {
+  display: block;
+  color: #666;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+input[type="number"] {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+  }
+
+  .about-image {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .coordinates-container {
+    flex-direction: column;
+  }
+
+  .nav-links {
+    display: none;
+  }
 }
