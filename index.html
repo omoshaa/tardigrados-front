@@ -1,24 +1,118 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
-  <title>Tardígrados</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tardígrados | Mapeamento</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="assets/tardigrade-icon.png">
 </head>
-<body>
-  <h1>Mapa dos Tardígrados</h1>
-  <div id="map"></div>
 
-  <form id="form">
-    <input type="text" id="genero" placeholder="Gênero" required>
-    <input type="number" id="quantidade" placeholder="Quantidade" required>
-    <input type="number" id="raio" placeholder="Raio do ambiente (m)" required>
-    <input type="file" id="foto" accept="image/*" required>
-    <button type="submit">Cadastrar</button>
-  </form>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="assets/tardigrade-icon.png" alt="Tardígrado Logo" class="logo-img">
+      <span>PUNE  - Projeto Urso nas Escolas</span>
+    </div>
+    <div class="nav-links">
+      <a href="#about">Sobre</a>
+      <a href="#map-section">Mapa</a>
+      <a href="#register">Cadastrar</a>
+    </div>
+  </nav>
+
+  <section id="about">
+    <h2>Sobre os Tardígrados</h2>
+    <div class="about-content">
+      <img src="assets/tardigrade-photo.jpg" alt="Tardígrado" class="about-image">
+      <div class="about-text">
+        <p>Tardígrados, também conhecidos como ursos d'água, são pequenos animais microscópicos extremamente
+          resistentes.
+          Podem sobreviver em condições extremas, incluindo:</p>
+        <ul>
+          <li>Temperaturas próximas ao zero absoluto</li>
+          <li>Temperaturas acima de 150°C</li>
+          <li>Pressões extremas</li>
+          <li>Radiação espacial</li>
+          <li>Décadas sem água (criptobiose)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="map-section">
+    <h2>Mapa de Ocorrências</h2>
+    <div class="stats-container">
+      <div class="stat-box">
+        <span id="total-registros">0</span>
+        <p>Registros</p>
+      </div>
+      <div class="stat-box">
+        <span id="total-generos">0</span>
+        <p>Gêneros</p>
+      </div>
+    </div>
+    <div id="map"></div>
+  </section>
+
+  <section id="register">
+    <h2>Novo Registro</h2>
+    <form id="form">
+      <div class="form-group">
+        <div class="coordinates-container">
+          <input type="number" id="latitude" placeholder="Latitude" step="any" required>
+          <input type="number" id="longitude" placeholder="Longitude" step="any" required>
+          <button type="button" id="getLocation" title="Usar localização atual">
+            <i class="fas fa-location-crosshairs"></i>
+          </button>
+        </div>
+        <small>Clique no mapa ou use sua localização atual</small>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="genero" placeholder="Gênero" required>
+        <input type="number" id="quantidade" placeholder="Quantidade" required>
+        <input type="number" id="raio" placeholder="Raio do ambiente (m)" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" id="localidade" placeholder="Nome da localidade" required>
+        <input type="text" id="pesquisador" placeholder="Nome do pesquisador" required>
+      </div>
+
+      <div class="form-group">
+        <textarea id="observacoes" placeholder="Observações"></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="file-upload">
+          <label for="foto">
+            <i class="fas fa-camera"></i>
+            <span>Escolher foto</span>
+          </label>
+          <input type="file" id="foto" accept="image/*" required>
+        </div>
+        <div id="image-preview"></div>
+      </div>
+
+      <button type="submit">
+        <i class="fas fa-save"></i>
+        Salvar Registro
+      </button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 PUNE - Projeto Ursos na Escola - Mapeamento Científico</p>
+  </footer>
+
+  <div id="notification"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
+
 </html>
