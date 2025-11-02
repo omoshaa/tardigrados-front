@@ -522,7 +522,7 @@ const keySteps = {
       {
         text: "1. Cirros laterais A presentes.",
         next: "heterotardigrada_ordens",
-        image: "assets/key-images/fig1-cirros-A-presentes.jpg",
+        image: "assets/fig1.png",
       },
       {
         text: "1'. Cirros laterais A ausentes.",
@@ -544,7 +544,7 @@ const keySteps = {
       {
         text: "1. Cirro mediano geralmente presente; dígitos ou garras inseridos diretamente na perna.",
         next: "arthrotardigrada_result",
-        image: "assets/key-images/fig2-arthrotardigrada.jpg",
+        image: "assets/fig2.jpg",
       },
       {
         text: "1'. Cirro mediano ausente; cada garra e uma papila inserida na perna.",
@@ -560,7 +560,7 @@ const keySteps = {
     result: "Ordem Arthrotardigrada",
     description:
       "Uma espécie: Styraconyx hallasi. Tardigrado marinho encontrado acidentalmente em fontes da Groenlândia.",
-    image: "assets/key-results/Styraconyx.jpg",
+    image: "assets/resultadoArthrotardigrada.png",
   },
 
   // ORDEM ECHINISCOIDEA: Famílias
@@ -1170,7 +1170,7 @@ function showStep(step) {
         <button class="key-option" data-step="${option.next}">
           <img src="${
             option.image || "assets/tardigrade-icon.png"
-          }" alt="Imagem para ${escapeHtml(
+          }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="Imagem para ${escapeHtml(
             option.text
           )}" class="key-option-image">
           <div class="key-option-text">${escapeHtml(option.text)}</div>
@@ -1200,7 +1200,9 @@ function showResult(step) {
       <p>${escapeHtml(step.description)}</p>
       <img src="${
         step.image || "assets/tardigrade-icon.png"
-      }" alt="Imagem de ${escapeHtml(step.result)}" class="result-image">
+      }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="Imagem de ${escapeHtml(
+    step.result
+  )}" class="result-image">
     </div>
   `;
   // Não atualiza o histórico aqui, pois o histórico é atualizado no nextStep
@@ -1315,14 +1317,14 @@ const tardigradeStructures = [
     name: "Cirros Laterais A",
     description:
       "Estruturas sensoriais em forma de seta (cA) localizadas lateralmente na cabeça. Essenciais para diferenciar Heterotardigrada (presentes) de Eutardigrada (ausentes).",
-    image: "assets/key-images/cirro-A-presente.jpg",
+    image: "assets/fig1.png",
   },
   {
     id: "cirro-mediano",
     name: "Cirro Mediano",
     description:
       "Uma única estrutura sensorial no centro da cabeça. Comum em Arthrotardigrada, mas ausente em Echiniscoidea.",
-    image: "assets/key-images/cirro-mediano-presente.jpg",
+    image: "assets/fig2.jpg",
   },
   {
     id: "placas-dorsais",
@@ -1423,7 +1425,7 @@ function renderStructures() {
             <div class="estrutura-card-image-container">
                 <img src="${
                   estrutura.image || "assets/tardigrade-icon.png"
-                }" alt="${escapeHtml(
+                }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="${escapeHtml(
         estrutura.name
       )}" class="estrutura-card-image">
             </div>

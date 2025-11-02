@@ -1947,9 +1947,9 @@ html {
 
 /* 2. NOVA classe para a IMAGEM DA OPÇÃO */
 .key-option-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  width: 120px;
+  height: 100px;
+  object-fit: contain; /* mostrar a imagem inteira sem cortar */
   border-radius: var(--radius-small);
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-light);
@@ -2311,7 +2311,8 @@ html {
 .estrutura-card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Garante que a imagem preencha o espaço */
+  object-fit: contain; /* Mostrar a imagem inteira dentro do card */
+  background-color: #fff; /* Fundo branco para contraste */
   transition: transform 0.3s ease;
 }
 
