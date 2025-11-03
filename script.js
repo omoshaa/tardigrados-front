@@ -241,6 +241,22 @@ let tardiRecords = JSON.parse(localStorage.getItem("tardiRecords")) || [
     fotos: [],
     data: "2025-10-29T12:01:00Z",
   },
+  {
+    id: "daniel1",
+    latitude: -22.9718,
+    longitude: -47.1085,
+    classe: "Eutardigrada",
+    ordem: "Parachela",
+    familia: "Macrobiotidae",
+    genero: "Macrobiotus",
+    especie: "",
+    localidade: "Campinas, SP",
+    habitat: "Terrestre - Musgo",
+    pesquisador: "Daniel Mizael Spagiari de Souza",
+    instituicao: "PUNE",
+    fotos: [],
+    data: "2025-10-30T10:00:00Z",
+  },
 ];
 
 // ============================================================
@@ -362,10 +378,7 @@ function getFilteredRecords() {
   const generoFilter = document.getElementById("genero-filter")?.value;
 
   return tardiRecords.filter((record) => {
-    const grupoMatch =
-      !grupoFilter ||
-      record.classe === grupoFilter ||
-      record.ordem === grupoFilter;
+    const grupoMatch = !grupoFilter || record.classe === grupoFilter;
     const ordemMatch = !ordemFilter || record.ordem === ordemFilter;
     const generoMatch = !generoFilter || record.genero === generoFilter;
     return grupoMatch && ordemMatch && generoMatch;
@@ -1685,19 +1698,37 @@ function init() {
   // Event Listener para Filtro de Classes (Mapa)
   const grupoFilter = document.getElementById("grupo-filter");
   if (grupoFilter) {
-    grupoFilter.addEventListener("change", renderAll);
+    grupoFilter.addEventListener("change", () => {
+      populateOrdemFilter();
+      populateGeneroFilter();
+      updateStats();
+      renderTaxonomyCards();
+      renderRecordsTable();
+      renderMarkers();
+    });
   }
 
   // Event Listener para Filtro de Ordem (Mapa)
   const ordemFilter = document.getElementById("ordem-filter");
   if (ordemFilter) {
-    ordemFilter.addEventListener("change", renderAll);
+    ordemFilter.addEventListener("change", () => {
+      populateGeneroFilter();
+      updateStats();
+      renderTaxonomyCards();
+      renderRecordsTable();
+      renderMarkers();
+    });
   }
 
   // Event Listener para Filtro de Gênero (Mapa)
   const generoFilter = document.getElementById("genero-filter");
   if (generoFilter) {
-    generoFilter.addEventListener("change", renderAll);
+    generoFilter.addEventListener("change", () => {
+      updateStats();
+      renderTaxonomyCards();
+      renderRecordsTable();
+      renderMarkers();
+    });
   }
 
   // Event Listener para Toggle de Visualização (Cards/Tabela)
