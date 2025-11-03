@@ -973,7 +973,7 @@ const keySteps = {
       {
         text: "1. Cabeça sem papilas cefálicas; geralmente 2 ganchos duplos por perna.",
         next: "parachela_superfamilias",
-        image: "assets/key-images/fig6-sem-papilas.jpg",
+        image: "assets/fig12.png",
       },
       {
         text: "1'. Cabeça com papilas cefálicas (incluindo duas papilas laterais); ganchos com ramo secundário não conectado ao primário.",
