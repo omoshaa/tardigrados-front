@@ -2451,8 +2451,8 @@ html {
   border: 2px solid rgba(129, 199, 132, 0.25);
   margin-bottom: 28px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 .filter-group {
@@ -3282,5 +3282,295 @@ a.menu-btn {
   ::placeholder {
     color: #666 !important;
     opacity: 1;
+  }
+}
+
+/* ============================================================
+   ESTILOS PARA VISUALIZAÇÃO POR ORDEM E GÊNERO
+============================================================ */
+
+/* ----------------------------
+   BOTÕES DE TOGGLE DE VISUALIZAÇÃO
+----------------------------- */
+.taxonomy-view {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: white;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.view-toggle:hover {
+  background: var(--accent);
+  border-color: var(--primary-dark);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.view-toggle.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-medium);
+}
+
+.view-toggle i {
+  font-size: 1.1rem;
+}
+
+/* ----------------------------
+   CONTAINER DOS CARDS DE TAXONOMIA
+----------------------------- */
+.taxonomy-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  margin: 24px 0;
+}
+
+/* Tabela inicialmente oculta (cards é o padrão) */
+.records-section .table-container {
+  display: none;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* ----------------------------
+   CARDS DE TAXONOMIA POR ORDEM
+----------------------------- */
+.taxonomy-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  border: 2px solid rgba(129, 199, 132, 0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.taxonomy-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-4px);
+  border-color: var(--primary);
+}
+
+/* Cabeçalho do Card */
+.taxonomy-card-header {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  padding: 20px;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.taxonomy-card-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.taxonomy-card-header h4 {
+  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+}
+
+.taxonomy-card-header .badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+/* Corpo do Card */
+.taxonomy-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ----------------------------
+   ITENS DE GÊNERO
+----------------------------- */
+.genero-item {
+  background: rgba(232, 245, 233, 0.5);
+  padding: 16px;
+  border-radius: var(--radius-small);
+  border-left: 4px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.genero-item:hover {
+  background: rgba(165, 214, 167, 0.3);
+  border-left-color: var(--primary-dark);
+  transform: translateX(4px);
+}
+
+.genero-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.genero-header i {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.genero-header strong {
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  flex: 1;
+}
+
+.genero-count {
+  background: var(--primary);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ----------------------------
+   LISTA DE ESPÉCIES
+----------------------------- */
+.especies-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.especie-tag {
+  background: white;
+  border: 1px solid rgba(129, 199, 132, 0.4);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  display: inline-block;
+}
+
+.especie-tag i {
+  font-style: italic;
+}
+
+/* ----------------------------
+   PREVIEW DE LOCALIDADES
+----------------------------- */
+.localidades-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(129, 199, 132, 0.2);
+}
+
+.localidades-preview small {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.localidades-preview i {
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+/* ----------------------------
+   RESPONSIVO - CARDS DE TAXONOMIA
+----------------------------- */
+@media (max-width: 767px) {
+  .taxonomy-cards-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .taxonomy-card-header {
+    padding: 16px;
+  }
+
+  .taxonomy-card-header h3 {
+    font-size: 1rem;
+  }
+
+  .taxonomy-card-header h4 {
+    font-size: 1.2rem;
+  }
+
+  .taxonomy-card-body {
+    padding: 16px;
+  }
+
+  .genero-item {
+    padding: 12px;
+  }
+
+  .view-toggle {
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .taxonomy-view {
+    flex-direction: column;
+  }
+
+  .view-toggle {
+    width: 100%;
+  }
+}
+
+/* ----------------------------
+   STATS CONTAINER COM 4 BOXES
+----------------------------- */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+@media (max-width: 480px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

@@ -331,15 +331,18 @@ function renderMarkers() {
   markers = [];
   const filteredRecords = getFilteredRecords();
   filteredRecords.forEach((record) => {
+    const speciesName =
+      record.especie && record.especie !== "N/A"
+        ? `<i>${escapeHtml(record.genero)} ${escapeHtml(record.especie)}</i>`
+        : `<i>${escapeHtml(record.genero)}</i> sp.`;
+
     const popupHtml = `
       <div class="popup-content">
-        <h4>${escapeHtml(record.classe)} - <i>${escapeHtml(
-      record.genero
-    )}</i></h4>
-        <p><strong>Gênero:</strong> <i>${escapeHtml(
-          record.genero
-        )} ${escapeHtml(record.especie)}</i></p>
-        <p><strong>Local:</strong> ${escapeHtml(record.localidade)}</p>
+        <h4>${escapeHtml(record.classe)}</h4>
+        <p><strong>Ordem:</strong> ${escapeHtml(record.ordem)}</p>
+        <p><strong>Gênero/Espécie:</strong> ${speciesName}</p>
+        <p><strong>Localidade:</strong> ${escapeHtml(record.localidade)}</p>
+        <p><strong>Habitat:</strong> ${escapeHtml(record.habitat)}</p>
         <p><strong>Pesquisador:</strong> ${escapeHtml(record.pesquisador)}</p>
         <p><strong>Data:</strong> ${new Date(record.data).toLocaleDateString(
           "pt-BR"
@@ -355,6 +358,7 @@ function renderMarkers() {
 
 function getFilteredRecords() {
   const grupoFilter = document.getElementById("grupo-filter")?.value;
+  const ordemFilter = document.getElementById("ordem-filter")?.value;
   const generoFilter = document.getElementById("genero-filter")?.value;
 
   return tardiRecords.filter((record) => {
@@ -362,21 +366,69 @@ function getFilteredRecords() {
       !grupoFilter ||
       record.classe === grupoFilter ||
       record.ordem === grupoFilter;
+    const ordemMatch = !ordemFilter || record.ordem === ordemFilter;
     const generoMatch = !generoFilter || record.genero === generoFilter;
-    return grupoMatch && generoMatch;
+    return grupoMatch && ordemMatch && generoMatch;
   });
 }
 
-// Popula o filtro de Gênero
+// Popula o filtro de Ordem baseado na classe selecionada
+function populateOrdemFilter() {
+  const grupoFilter = document.getElementById("grupo-filter");
+  const ordemFilter = document.getElementById("ordem-filter");
+  if (!ordemFilter) return;
+
+  const selectedClasse = grupoFilter?.value || "";
+
+  let filteredRecords = tardiRecords;
+  if (selectedClasse) {
+    filteredRecords = tardiRecords.filter((r) => r.classe === selectedClasse);
+  }
+
+  const ordens = [...new Set(filteredRecords.map((r) => r.ordem))]
+    .filter((o) => o && o.trim() !== "" && o !== "Indeterminado")
+    .sort();
+
+  ordemFilter.innerHTML = '<option value="">Todas as Ordens</option>';
+
+  ordens.forEach((ordem) => {
+    const option = document.createElement("option");
+    option.value = ordem;
+    option.textContent = ordem;
+    ordemFilter.appendChild(option);
+  });
+
+  if (ordemFilter.value && !ordens.includes(ordemFilter.value)) {
+    ordemFilter.value = "";
+  }
+}
+
+// Popula o filtro de Gênero baseado na classe e ordem selecionadas
 function populateGeneroFilter() {
+  const grupoFilter = document.getElementById("grupo-filter");
+  const ordemFilter = document.getElementById("ordem-filter");
   const generoFilter = document.getElementById("genero-filter");
   if (!generoFilter) return;
 
-  const generos = [...new Set(tardiRecords.map((r) => r.genero))]
-    .filter((g) => g && g.trim() !== "" && g !== "Outro")
+  const selectedClasse = grupoFilter?.value || "";
+  const selectedOrdem = ordemFilter?.value || "";
+
+  let filteredRecords = tardiRecords;
+  if (selectedClasse) {
+    filteredRecords = filteredRecords.filter(
+      (r) => r.classe === selectedClasse
+    );
+  }
+  if (selectedOrdem) {
+    filteredRecords = filteredRecords.filter((r) => r.ordem === selectedOrdem);
+  }
+
+  const generos = [...new Set(filteredRecords.map((r) => r.genero))]
+    .filter(
+      (g) => g && g.trim() !== "" && g !== "Outro" && g !== "Indeterminado"
+    )
     .sort();
 
-  // Limpa opções antigas (exceto a primeira "Todos")
   generoFilter.innerHTML = '<option value="">Todos os Gêneros</option>';
 
   generos.forEach((genero) => {
@@ -385,23 +437,38 @@ function populateGeneroFilter() {
     option.textContent = genero;
     generoFilter.appendChild(option);
   });
+
+  if (generoFilter.value && !generos.includes(generoFilter.value)) {
+    generoFilter.value = "";
+  }
 }
 
 // ============================================================
 // ESTATÍSTICAS (Cards de contadores)
 // ============================================================
 function updateStats() {
-  const totalRegistros = tardiRecords.length;
-  const totalGrupos = [...new Set(tardiRecords.map((r) => r.classe))].filter(
-    (g) => g !== "Indeterminado"
-  ).length;
-  const totalGeneros = [...new Set(tardiRecords.map((r) => r.genero))].filter(
-    (g) => g !== "Outro"
+  const filteredRecords = getFilteredRecords();
+  const totalRegistros = filteredRecords.length;
+
+  // Conta classes únicas (não "Indeterminado")
+  const totalClasses = [
+    ...new Set(filteredRecords.map((r) => r.classe)),
+  ].filter((g) => g && g !== "Indeterminado").length;
+
+  // Conta ordens únicas
+  const totalOrdens = [...new Set(filteredRecords.map((r) => r.ordem))].filter(
+    (o) => o && o !== "Indeterminado"
   ).length;
 
+  // Conta gêneros únicos (não "Outro" ou "Indeterminado")
+  const totalGeneros = [
+    ...new Set(filteredRecords.map((r) => r.genero)),
+  ].filter((g) => g && g !== "Outro" && g !== "Indeterminado").length;
+
   document.getElementById("total-registros").textContent = totalRegistros;
-  document.getElementById("total-grupos").textContent = totalGrupos;
-  document.getElementById("total-especies").textContent = totalGeneros; // ID no HTML ainda é "total-especies", mas agora conta Gêneros
+  document.getElementById("total-grupos").textContent = totalClasses;
+  document.getElementById("total-ordens").textContent = totalOrdens;
+  document.getElementById("total-especies").textContent = totalGeneros;
 }
 
 // ============================================================
@@ -1238,10 +1305,12 @@ function renderRecordsTable() {
   const tbody = document.getElementById("records-body");
   if (!tbody) return;
 
-  // Ordena por data mais recente
-  const records = getFilteredRecords().sort(
-    (a, b) => new Date(b.data) - new Date(a.data)
-  );
+  // Ordena por ordem, depois por gênero, depois por data
+  const records = getFilteredRecords().sort((a, b) => {
+    if (a.ordem !== b.ordem) return a.ordem.localeCompare(b.ordem);
+    if (a.genero !== b.genero) return a.genero.localeCompare(b.genero);
+    return new Date(b.data) - new Date(a.data);
+  });
 
   if (records.length === 0) {
     tbody.innerHTML =
@@ -1250,21 +1319,23 @@ function renderRecordsTable() {
   }
 
   tbody.innerHTML = records
-    .map(
-      (record) => `
+    .map((record) => {
+      // Formata nome científico correto
+      const speciesDisplay =
+        record.especie &&
+        record.especie !== "N/A" &&
+        record.especie.trim() !== ""
+          ? record.especie
+          : "sp.";
+
+      return `
     <tr>
+      <td data-label="Classe">${escapeHtml(record.classe)}</td>
       <td data-label="Ordem">${escapeHtml(record.ordem)}</td>
       <td data-label="Gênero"><i>${escapeHtml(record.genero)}</i></td>
-      <td data-label="Espécie"><i>${escapeHtml(
-        record.especie || "N/A"
-      )}</i></td>
-      <td data-label="Coordenadas" style="font-size: 0.85rem;">${record.latitude.toFixed(
-        4
-      )}, ${record.longitude.toFixed(4)}</td>
+      <td data-label="Espécie"><i>${escapeHtml(speciesDisplay)}</i></td>
+      <td data-label="Localidade">${escapeHtml(record.localidade)}</td>
       <td data-label="Pesquisador">${escapeHtml(record.pesquisador)}</td>
-      <td data-label="Instituição">${escapeHtml(
-        record.instituicao || "N/A"
-      )}</td>
       <td data-label="Data">${new Date(record.data).toLocaleDateString(
         "pt-BR"
       )}</td>
@@ -1276,8 +1347,122 @@ function renderRecordsTable() {
         </button>
       </td>
     </tr>
-  `
-    )
+  `;
+    })
+    .join("");
+}
+
+// ============================================================
+// VISUALIZAÇÃO POR ORDEM E GÊNERO (CARDS)
+// ============================================================
+function renderTaxonomyCards() {
+  const container = document.getElementById("taxonomy-cards");
+  if (!container) return;
+
+  const records = getFilteredRecords();
+
+  // Agrupa por ordem
+  const byOrdem = {};
+  records.forEach((record) => {
+    if (!byOrdem[record.ordem]) {
+      byOrdem[record.ordem] = {
+        classe: record.classe,
+        generos: {},
+      };
+    }
+    if (!byOrdem[record.ordem].generos[record.genero]) {
+      byOrdem[record.ordem].generos[record.genero] = [];
+    }
+    byOrdem[record.ordem].generos[record.genero].push(record);
+  });
+
+  // Ordena as ordens
+  const ordensOrdenadas = Object.keys(byOrdem).sort();
+
+  if (ordensOrdenadas.length === 0) {
+    container.innerHTML = '<p class="no-data">Nenhum registro encontrado.</p>';
+    return;
+  }
+
+  container.innerHTML = ordensOrdenadas
+    .map((ordem) => {
+      const data = byOrdem[ordem];
+      const generosOrdenados = Object.keys(data.generos).sort();
+      const totalRegistros = generosOrdenados.reduce(
+        (sum, genero) => sum + data.generos[genero].length,
+        0
+      );
+
+      return `
+        <div class="taxonomy-card">
+          <div class="taxonomy-card-header">
+            <h3>${escapeHtml(data.classe)}</h3>
+            <h4>Ordem: ${escapeHtml(ordem)}</h4>
+            <span class="badge">${totalRegistros} registro${
+        totalRegistros > 1 ? "s" : ""
+      }</span>
+          </div>
+          <div class="taxonomy-card-body">
+            ${generosOrdenados
+              .map((genero) => {
+                const registros = data.generos[genero];
+                const especies = [
+                  ...new Set(
+                    registros
+                      .map((r) => r.especie)
+                      .filter((e) => e && e !== "N/A")
+                  ),
+                ];
+
+                return `
+                  <div class="genero-item">
+                    <div class="genero-header">
+                      <i class="fas fa-dna"></i>
+                      <strong><i>${escapeHtml(genero)}</i></strong>
+                      <span class="genero-count">${registros.length}</span>
+                    </div>
+                    ${
+                      especies.length > 0
+                        ? `
+                      <div class="especies-list">
+                        ${especies
+                          .map(
+                            (e) =>
+                              `<span class="especie-tag"><i>${escapeHtml(
+                                genero
+                              )} ${escapeHtml(e)}</i></span>`
+                          )
+                          .join("")}
+                      </div>
+                    `
+                        : `<div class="especies-list"><span class="especie-tag"><i>${escapeHtml(
+                            genero
+                          )}</i> sp.</span></div>`
+                    }
+                    <div class="localidades-preview">
+                      ${registros
+                        .slice(0, 2)
+                        .map(
+                          (r) =>
+                            `<small><i class="fas fa-map-marker-alt"></i> ${escapeHtml(
+                              r.localidade
+                            )}</small>`
+                        )
+                        .join("")}
+                      ${
+                        registros.length > 2
+                          ? `<small>+${registros.length - 2} mais</small>`
+                          : ""
+                      }
+                    </div>
+                  </div>
+                `;
+              })
+              .join("")}
+          </div>
+        </div>
+      `;
+    })
     .join("");
 }
 
@@ -1307,11 +1492,12 @@ function showNotification(message, type = "info") {
 // RENDERIZAÇÃO GERAL
 // ============================================================
 function renderAll() {
+  populateOrdemFilter(); // Atualiza o filtro de ordem
   populateGeneroFilter(); // Atualiza o filtro de gênero
   updateStats();
+  renderTaxonomyCards(); // Renderiza os cards por ordem/gênero
   renderRecordsTable();
   renderMarkers();
-  // Galeria de estruturas é renderizada ao entrar na seção
 }
 
 // ============================================================
@@ -1330,7 +1516,7 @@ const tardigradeStructures = [
     name: "Cirro Mediano",
     description:
       "Uma única estrutura sensorial no centro da cabeça. Comum em Arthrotardigrada, mas ausente em Echiniscoidea.",
-    image: "assets/fig2.jpg",
+    image: "assets/fig2.png",
   },
   {
     id: "placas-dorsais",
@@ -1351,21 +1537,21 @@ const tardigradeStructures = [
     name: "Garras Assimétricas (2-1-2-1)",
     description:
       "Garras de tamanhos ou formas diferentes, com sequência 2-1-2-1. Típico de Hypsibioidea e Isohypsibioidea.",
-    image: "assets/key-images/garras-assimetricas.jpg",
+    image: "assets/fig5.png",
   },
   {
     id: "garras-simetricas",
     name: "Garras Simétricas (2-1-1-2)",
     description:
       "Garras semelhantes em tamanho e forma, com sequência 2-1-1-2. Característica de Macrobiotoidea.",
-    image: "assets/key-images/garras-simetricas.jpg",
+    image: "assets/fig6.png",
   },
   {
     id: "garras-tipo-Y",
     name: "Garras Tipo Y (Macrobiotidae)",
     description:
       "Garras onde os ramos primário e secundário são fundidos por um trecho, formando um 'Y'.",
-    image: "assets/key-images/garras-Y.jpg",
+    image: "assets/fig7.png",
   },
   {
     id: "garras-tipo-V-L",
@@ -1496,10 +1682,16 @@ function init() {
     fotoInput.addEventListener("change", handleImagePreview);
   }
 
-  // Event Listener para Filtro de Grupos (Mapa)
+  // Event Listener para Filtro de Classes (Mapa)
   const grupoFilter = document.getElementById("grupo-filter");
   if (grupoFilter) {
     grupoFilter.addEventListener("change", renderAll);
+  }
+
+  // Event Listener para Filtro de Ordem (Mapa)
+  const ordemFilter = document.getElementById("ordem-filter");
+  if (ordemFilter) {
+    ordemFilter.addEventListener("change", renderAll);
   }
 
   // Event Listener para Filtro de Gênero (Mapa)
@@ -1507,6 +1699,27 @@ function init() {
   if (generoFilter) {
     generoFilter.addEventListener("change", renderAll);
   }
+
+  // Event Listener para Toggle de Visualização (Cards/Tabela)
+  const viewToggles = document.querySelectorAll(".view-toggle");
+  viewToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const view = toggle.dataset.view;
+      viewToggles.forEach((t) => t.classList.remove("active"));
+      toggle.classList.add("active");
+
+      const cardsContainer = document.getElementById("taxonomy-cards");
+      const tableContainer = document.querySelector(".table-container");
+
+      if (view === "cards") {
+        if (cardsContainer) cardsContainer.style.display = "grid";
+        if (tableContainer) tableContainer.style.display = "none";
+      } else {
+        if (cardsContainer) cardsContainer.style.display = "none";
+        if (tableContainer) tableContainer.style.display = "block";
+      }
+    });
+  });
 
   // Event Listener para Filtro da Galeria de Estruturas
   const estruturaSearch = document.getElementById("estrutura-search");

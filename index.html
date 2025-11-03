@@ -145,7 +145,11 @@
           </div>
           <div class="stat-box">
             <span id="total-grupos">0</span>
-            <p>Grupos</p>
+            <p>Classes</p>
+          </div>
+          <div class="stat-box">
+            <span id="total-ordens">0</span>
+            <p>Ordens</p>
           </div>
           <div class="stat-box">
             <span id="total-especies">0</span>
@@ -157,12 +161,22 @@
           <div class="filter-group">
             <label for="grupo-filter">
               <i class="fas fa-layer-group" aria-hidden="true"></i>
-              Filtrar por Grupo
+              Filtrar por Classe
             </label>
             <select id="grupo-filter" class="filter-select">
-              <option value="">Todos os Grupos</option>
+              <option value="">Todas as Classes</option>
               <option value="Heterotardigrada">Heterotardigrada</option>
               <option value="Eutardigrada">Eutardigrada</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="ordem-filter">
+              <i class="fas fa-sitemap" aria-hidden="true"></i>
+              Filtrar por Ordem
+            </label>
+            <select id="ordem-filter" class="filter-select">
+              <option value="">Todas as Ordens</option>
             </select>
           </div>
 
@@ -180,17 +194,30 @@
         <div id="map"></div>
 
         <div class="records-section">
-          <h3>Registros Recentes</h3>
+          <h3>Registros por Ordem e Gênero</h3>
+
+          <!-- Visualização em Cards por Ordem -->
+          <div class="taxonomy-view">
+            <button class="view-toggle active" data-view="cards">
+              <i class="fas fa-th-large"></i> Visualização em Cards
+            </button>
+            <button class="view-toggle" data-view="table">
+              <i class="fas fa-table"></i> Visualização em Tabela
+            </button>
+          </div>
+
+          <div id="taxonomy-cards" class="taxonomy-cards-container"></div>
+
           <div class="table-container">
             <table id="records-table">
               <thead>
                 <tr>
+                  <th>Classe</th>
                   <th>Ordem</th>
                   <th>Gênero</th>
                   <th>Espécie</th>
-                  <th>Coordenadas</th>
+                  <th>Localidade</th>
                   <th>Pesquisador</th>
-                  <th>Instituição</th>
                   <th>Data</th>
                   <th>Ações</th>
                 </tr>
