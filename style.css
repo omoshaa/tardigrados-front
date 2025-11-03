@@ -766,6 +766,36 @@ legend {
 
 .btn:active {
   transform: translateY(0);
+  opacity: 0.9;
+}
+
+/* Touch feedback para dispositivos móveis */
+@media (hover: none) and (pointer: coarse) {
+  .btn:active,
+  .menu-btn:active,
+  .key-option:active,
+  .mobile-nav-item:active,
+  .btn-action:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+    transition: all 0.1s ease;
+  }
+
+  /* Melhora o tap highlight */
+  * {
+    -webkit-tap-highlight-color: rgba(46, 125, 50, 0.2);
+    -webkit-touch-callout: none;
+  }
+
+  /* Torna elementos interativos mais visíveis */
+  button,
+  a,
+  .btn,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: rgba(46, 125, 50, 0.3);
+  }
 }
 
 .btn-secondary {
@@ -2781,4 +2811,476 @@ html {
   color: var(--text-primary);
   font-size: 1rem;
   margin: 0;
+}
+
+/* ============================================================
+   MELHORIAS ADICIONAIS PARA MOBILE E TABLETS
+============================================================ */
+
+/* ----------------------------
+   TOUCH TARGETS - Mínimo de 44x44px (Apple HIG)
+----------------------------- */
+button,
+.btn,
+.nav-item,
+.mobile-nav-item,
+a.menu-btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ----------------------------
+   TABELAS RESPONSIVAS - Modo Card para Mobile
+----------------------------- */
+@media (max-width: 640px) {
+  /* Oculta cabeçalho da tabela */
+  table thead {
+    display: none;
+  }
+
+  /* Transforma cada linha em um card */
+  table,
+  table tbody,
+  table tr,
+  table td {
+    display: block;
+    width: 100%;
+  }
+
+  table tr {
+    margin-bottom: 16px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(129, 199, 132, 0.2);
+  }
+
+  table td {
+    text-align: left;
+    padding: 8px 0;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Adiciona labels antes de cada célula */
+  table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    flex-basis: 40%;
+  }
+
+  /* Botões de ação no mobile */
+  table td .btn-action {
+    margin-left: auto;
+  }
+}
+
+/* ----------------------------
+   FORMULÁRIOS - Melhor usabilidade mobile
+----------------------------- */
+@media (max-width: 767px) {
+  /* Inputs maiores para touch */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="file"],
+  textarea,
+  select {
+    min-height: 48px;
+    font-size: 16px; /* Previne zoom automático no iOS */
+    padding: 12px 16px;
+  }
+
+  textarea {
+    min-height: 120px;
+  }
+
+  /* Botões maiores */
+  .btn {
+    min-height: 48px;
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+
+  /* Labels mais visíveis */
+  label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* Fieldsets mais compactos */
+  fieldset {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Melhor espaçamento */
+  .form-group {
+    margin-bottom: 16px;
+  }
+}
+
+/* ----------------------------
+   MAPA - Otimizações para mobile
+----------------------------- */
+@media (max-width: 767px) {
+  #map {
+    height: 300px !important;
+    border-radius: var(--radius-small);
+    touch-action: pan-x pan-y; /* Melhora interação touch */
+  }
+
+  /* Controles do mapa maiores */
+  .leaflet-control-zoom a {
+    width: 36px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-size: 20px !important;
+  }
+
+  /* Stats mais compactos */
+  .stats-container {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .stat-box {
+    padding: 16px 12px;
+  }
+
+  .stat-box span {
+    font-size: 1.6rem;
+  }
+
+  .stat-box p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ----------------------------
+   FILTROS - Layout mobile
+----------------------------- */
+@media (max-width: 767px) {
+  .filter-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-height: 48px;
+    font-size: 16px;
+  }
+}
+
+/* ----------------------------
+   CHAVE DICOTÔMICA - Mobile
+----------------------------- */
+@media (max-width: 767px) {
+  .key-step {
+    padding: 20px 16px;
+  }
+
+  .key-options {
+    gap: 12px;
+  }
+
+  .key-option {
+    padding: 16px;
+    min-height: 60px;
+    font-size: 0.95rem;
+  }
+
+  .key-option:active {
+    transform: scale(0.98);
+  }
+
+  /* Caminho da identificação */
+  .path-display {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+}
+
+/* ----------------------------
+   CARDS DE ESTRUTURAS - Grid responsivo
+----------------------------- */
+@media (max-width: 767px) {
+  .estrutura-cards-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .estrutura-card {
+    padding: 16px;
+  }
+
+  .estrutura-card img {
+    max-height: 200px;
+  }
+}
+
+/* ----------------------------
+   MODO PAISAGEM (LANDSCAPE) - Smartphones
+----------------------------- */
+@media (max-width: 767px) and (orientation: landscape) {
+  /* Navbar mais compacta */
+  .navbar {
+    padding: 8px 16px;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .logo-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Hero section mais compacta */
+  .hero-content {
+    padding: 20px 16px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-description {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+
+  /* Menu buttons em 2 colunas em landscape */
+  .menu-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .menu-btn {
+    padding: 16px 12px;
+  }
+
+  /* Mapa maior em landscape */
+  #map {
+    height: 250px !important;
+  }
+
+  /* Footer mais compacto */
+  footer {
+    padding: 12px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ----------------------------
+   TABLETS - Landscape (768px - 1024px)
+----------------------------- */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .container {
+    padding: 32px 40px;
+  }
+
+  /* Menu em 2 colunas para tablets landscape */
+  .menu-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  /* Mapa otimizado */
+  #map {
+    height: 400px !important;
+  }
+
+  /* Formulário em 2 colunas */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Tabelas com scroll suave */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ----------------------------
+   TABLETS - Portrait (768px - 1024px)
+----------------------------- */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .menu-buttons {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+    margin: 40px auto 0;
+  }
+
+  #map {
+    height: 450px !important;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+/* ----------------------------
+   DISPOSITIVOS COM NOTCH (iPhone X+, etc)
+----------------------------- */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .navbar {
+    padding-left: max(32px, env(safe-area-inset-left));
+    padding-right: max(32px, env(safe-area-inset-right));
+  }
+
+  .mobile-nav-content {
+    padding-right: max(32px, env(safe-area-inset-right));
+  }
+
+  footer {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ----------------------------
+   IMPRESSÃO - Print Styles
+----------------------------- */
+@media print {
+  /* Oculta elementos não necessários */
+  .navbar,
+  .mobile-menu-btn,
+  .mobile-nav,
+  .back-btn,
+  .btn,
+  footer,
+  #notification {
+    display: none !important;
+  }
+
+  /* Remove fundos e sombras */
+  body {
+    background: white;
+  }
+
+  .container,
+  .section,
+  form,
+  table {
+    box-shadow: none;
+    background: white;
+  }
+
+  /* Melhora legibilidade */
+  body {
+    color: black;
+    font-size: 12pt;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: black;
+    page-break-after: avoid;
+  }
+
+  table {
+    page-break-inside: avoid;
+  }
+
+  /* Mostra URLs dos links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #666;
+  }
+}
+
+/* ----------------------------
+   ACESSIBILIDADE - Modo Alto Contraste
+----------------------------- */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: #1b5e20;
+    --primary-light: #2e7d32;
+    --text-primary: #000000;
+    --bg-card: #ffffff;
+  }
+
+  /* Bordas mais fortes */
+  .btn,
+  .menu-btn,
+  input,
+  select,
+  textarea {
+    border: 2px solid var(--primary);
+  }
+
+  /* Links mais visíveis */
+  a {
+    text-decoration: underline;
+  }
+}
+
+/* ----------------------------
+   REDUÇÃO DE MOVIMENTO - Acessibilidade
+----------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ----------------------------
+   MODO ESCURO DO SISTEMA (Opcional)
+----------------------------- */
+@media (prefers-color-scheme: dark) {
+  /* Inputs sempre claros para legibilidade */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  textarea,
+  select {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #1a1a1a !important;
+    border: 1px solid rgba(129, 199, 132, 0.3);
+  }
+
+  /* Placeholder mais visível */
+  ::placeholder {
+    color: #666 !important;
+    opacity: 1;
+  }
 }

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste de Responsividade - TardiStudy</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .checklist {
+        background: white;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      h1 {
+        color: #2e7d32;
+        border-bottom: 3px solid #2e7d32;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #1b5e20;
+        margin-top: 24px;
+      }
+      label {
+        display: block;
+        padding: 12px;
+        margin: 8px 0;
+        background: #f9f9f9;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      label:hover {
+        background: #e8f5e9;
+      }
+      input[type="checkbox"] {
+        margin-right: 10px;
+        transform: scale(1.2);
+      }
+      .status {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        margin-left: 8px;
+      }
+      .pass {
+        background: #c8e6c9;
+        color: #1b5e20;
+      }
+      .fail {
+        background: #ffcdd2;
+        color: #b71c1c;
+      }
+      .pending {
+        background: #fff9c4;
+        color: #f57f17;
+      }
+      .device {
+        display: inline-block;
+        background: #e3f2fd;
+        color: #0d47a1;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-right: 4px;
+      }
+      .info {
+        background: #e1f5fe;
+        border-left: 4px solid #0288d1;
+        padding: 16px;
+        margin: 16px 0;
+        border-radius: 4px;
+      }
+      button {
+        background: #2e7d32;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 16px;
+      }
+      button:hover {
+        background: #1b5e20;
+      }
+      .progress {
+        background: #e0e0e0;
+        height: 24px;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 16px 0;
+      }
+      .progress-bar {
+        background: linear-gradient(90deg, #2e7d32, #66bb6a);
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="checklist">
+      <h1>✅ Checklist de Testes - TardiStudy Mobile</h1>
+
+      <div class="info">
+        <strong>📱 Como usar este checklist:</strong><br />
+        1. Abra o site em diferentes dispositivos<br />
+        2. Marque os itens conforme testa<br />
+        3. Anote problemas encontrados<br />
+        4. O progresso é salvo automaticamente
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progress">0%</div>
+      </div>
+
+      <h2>🎯 Layout e Navegação</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Menu hamburger abre e fecha corretamente
+        <span class="device">iOS</span>
+        <span class="device">Android</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Logo e textos são visíveis em todas as telas
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Navegação entre seções funciona suavemente
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Botão "Voltar" funciona em todas as páginas
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Scroll não causa problemas de layout
+      </label>
+
+      <h2>📋 Formulários</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Inputs não causam zoom no iOS (font-size ≥ 16px)
+        <span class="device">iOS</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Teclado não esconde campos importantes
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Botão de geolocalização funciona
+        <span class="device">GPS</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Upload de fotos funciona (câmera e galeria)
+        <span class="device">Camera</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Validação de campos exibe mensagens claras
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Formulário é enviado corretamente
+      </label>
+
+      <h2>🗺️ Mapa Interativo</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Mapa carrega em todas as telas
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Zoom com pinch funciona suavemente
+        <span class="device">Touch</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Marcadores são clicáveis
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Popups são legíveis
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Filtros funcionam corretamente
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Mapa não interfere no scroll da página
+      </label>
+
+      <h2>📊 Tabelas</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Tabela vira cards em mobile (< 640px)
+        <span class="device">Mobile</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Data-labels aparecem corretamente
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Scroll horizontal funciona em telas médias
+        <span class="device">Tablet</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Botão de excluir funciona
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Tabela vazia mostra mensagem apropriada
+      </label>
+
+      <h2>🔍 Chave Dicotômica</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Opções são clicáveis e visíveis
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Feedback visual ao tocar nas opções
+        <span class="device">Touch</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Histórico de escolhas é exibido
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Botão "Recomeçar" funciona
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Resultado final é mostrado corretamente
+      </label>
+
+      <h2>🎨 Visual e UX</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Cores são consistentes em todo o site
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Imagens carregam rapidamente
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Ícones são nítidos e bem posicionados
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Texto é legível em todas as telas
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Botões têm feedback visual ao toque
+        <span class="device">Touch</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Notificações aparecem e desaparecem corretamente
+      </label>
+
+      <h2>📱 Orientações</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Layout funciona em portrait
+        <span class="device">Portrait</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Layout funciona em landscape
+        <span class="device">Landscape</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Transição entre orientações é suave
+      </label>
+
+      <h2>🚀 PWA e Performance</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Ícone "Adicionar à Tela Inicial" aparece
+        <span class="device">PWA</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        App funciona em modo standalone
+        <span class="device">PWA</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Barra de status tem cor correta (#2e7d32)
+        <span class="device">iOS</span>
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Site carrega em menos de 3 segundos
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Sem erros no console do navegador
+      </label>
+
+      <h2>♿ Acessibilidade</h2>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Touch targets têm no mínimo 44x44px
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Contraste de cores é adequado
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Labels e aria-labels estão presentes
+      </label>
+      <label>
+        <input type="checkbox" class="test-item" />
+        Funciona com leitor de tela
+        <span class="device">VoiceOver</span>
+        <span class="device">TalkBack</span>
+      </label>
+
+      <button onclick="generateReport()">📊 Gerar Relatório</button>
+      <button onclick="resetChecklist()" style="background: #f44336">
+        🔄 Resetar Checklist
+      </button>
+    </div>
+
+    <script>
+      // Carrega progresso salvo
+      document.addEventListener("DOMContentLoaded", () => {
+        loadProgress();
+        updateProgress();
+      });
+
+      // Atualiza progresso quando checkbox muda
+      document.querySelectorAll(".test-item").forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          saveProgress();
+          updateProgress();
+        });
+      });
+
+      function updateProgress() {
+        const checkboxes = document.querySelectorAll(".test-item");
+        const checked = document.querySelectorAll(".test-item:checked").length;
+        const total = checkboxes.length;
+        const percentage = Math.round((checked / total) * 100);
+
+        const progressBar = document.getElementById("progress");
+        progressBar.style.width = percentage + "%";
+        progressBar.textContent = percentage + "%";
+      }
+
+      function saveProgress() {
+        const checkboxes = document.querySelectorAll(".test-item");
+        const state = Array.from(checkboxes).map((cb) => cb.checked);
+        localStorage.setItem("tardistudyTestProgress", JSON.stringify(state));
+      }
+
+      function loadProgress() {
+        const saved = localStorage.getItem("tardistudyTestProgress");
+        if (saved) {
+          const state = JSON.parse(saved);
+          const checkboxes = document.querySelectorAll(".test-item");
+          state.forEach((checked, index) => {
+            if (checkboxes[index]) {
+              checkboxes[index].checked = checked;
+            }
+          });
+        }
+      }
+
+      function resetChecklist() {
+        if (confirm("Tem certeza que deseja resetar todo o progresso?")) {
+          document
+            .querySelectorAll(".test-item")
+            .forEach((cb) => (cb.checked = false));
+          localStorage.removeItem("tardistudyTestProgress");
+          updateProgress();
+        }
+      }
+
+      function generateReport() {
+        const total = document.querySelectorAll(".test-item").length;
+        const checked = document.querySelectorAll(".test-item:checked").length;
+        const percentage = Math.round((checked / total) * 100);
+
+        let status =
+          percentage === 100
+            ? "✅ APROVADO"
+            : percentage >= 80
+            ? "⚠️ ATENÇÃO"
+            : "❌ REPROVADO";
+
+        alert(`
+📊 RELATÓRIO DE TESTES - TardiStudy
+
+${status}
+
+✅ Itens Aprovados: ${checked}/${total}
+📊 Progresso: ${percentage}%
+⏰ Data: ${new Date().toLocaleString("pt-BR")}
+
+${
+  percentage === 100
+    ? "🎉 Parabéns! Todos os testes passaram!"
+    : percentage >= 80
+    ? "⚠️ Quase lá! Revise os itens pendentes."
+    : "❌ Vários problemas encontrados. Corrija antes do deploy."
+}
+            `);
+      }
+    </script>
+  </body>
+</html>

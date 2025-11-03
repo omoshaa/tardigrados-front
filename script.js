@@ -298,12 +298,12 @@ let choiceHistory = [];
 // ============================================================
 function initMap() {
   if (typeof L === "undefined") {
-    console.log("Leaflet não está carregado");
+    // console.log("Leaflet não está carregado");
     return;
   }
   const mapElement = document.getElementById("map");
   if (!mapElement) {
-    console.log("Elemento do mapa não encontrado");
+    // console.log("Elemento do mapa não encontrado");
     return;
   }
   try {
@@ -319,9 +319,9 @@ function initMap() {
       renderMarkers();
       map.invalidateSize();
     }, 500);
-    console.log("Mapa inicializado com sucesso");
+    // console.log("Mapa inicializado com sucesso");
   } catch (error) {
-    console.error("Erro ao inicializar o mapa:", error);
+    // console.error("Erro ao inicializar o mapa:", error);
   }
 }
 
@@ -1126,7 +1126,7 @@ const keySteps = {
 function nextStep(stepId) {
   const step = keySteps[stepId];
   if (!step) {
-    console.error("Passo da chave não encontrado:", stepId);
+    // console.error("Passo da chave não encontrado:", stepId);
     return;
   }
 
@@ -1227,7 +1227,7 @@ function resetKey() {
   if (keySteps[currentStep]) {
     showStep(keySteps[currentStep]);
   } else {
-    console.error("Passo inicial '1' não encontrado na chave.");
+    // console.error("Passo inicial '1' não encontrado na chave.");
   }
 }
 
@@ -1253,16 +1253,22 @@ function renderRecordsTable() {
     .map(
       (record) => `
     <tr>
-      <td>${escapeHtml(record.ordem)}</td>
-      <td><i>${escapeHtml(record.genero)}</i></td>
-      <td><i>${escapeHtml(record.especie || "N/A")}</i></td>
-      <td style="font-size: 0.85rem;">${record.latitude.toFixed(
+      <td data-label="Ordem">${escapeHtml(record.ordem)}</td>
+      <td data-label="Gênero"><i>${escapeHtml(record.genero)}</i></td>
+      <td data-label="Espécie"><i>${escapeHtml(
+        record.especie || "N/A"
+      )}</i></td>
+      <td data-label="Coordenadas" style="font-size: 0.85rem;">${record.latitude.toFixed(
         4
       )}, ${record.longitude.toFixed(4)}</td>
-      <td>${escapeHtml(record.pesquisador)}</td>
-      <td>${escapeHtml(record.instituicao || "N/A")}</td>
-      <td>${new Date(record.data).toLocaleDateString("pt-BR")}</td>
-      <td>
+      <td data-label="Pesquisador">${escapeHtml(record.pesquisador)}</td>
+      <td data-label="Instituição">${escapeHtml(
+        record.instituicao || "N/A"
+      )}</td>
+      <td data-label="Data">${new Date(record.data).toLocaleDateString(
+        "pt-BR"
+      )}</td>
+      <td data-label="Ações">
         <button class="btn-action btn-delete" data-id="${
           record.id
         }" aria-label="Excluir registro">
