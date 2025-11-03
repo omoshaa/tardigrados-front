@@ -1005,12 +1005,12 @@ const keySteps = {
       {
         text: '1. Garras duplas "assimétricas" (sequência 2-1-2-1); tubo bucal sem lâmina ventral.',
         next: "hypsibioidea_isohypsibioidea",
-        image: "assets/key-images/fig8-garras-assimetricas.jpg",
+        image: "assets/fig9.png",
       },
       {
         text: '1\'. Garras duplas "simétricas" (sequência 2-1-1-2); tubo bucal com lâmina ventral.',
         next: "macrobiotoidea_familias",
-        image: "assets/key-images/fig8-garras-simetricas.jpg",
+        image: "assets/fig6.png",
       },
     ],
   },
@@ -1298,12 +1298,12 @@ const keySteps = {
       {
         text: "1. Garras em formato L ou V (ramos das garras divergindo desde a base); gancho evidente na lâmina ventral.",
         next: "murrayidae_generos",
-        image: "assets/key-images/fig14-garras-L-V.jpg",
+        image: "assets/fig8.png",
       },
       {
         text: "1'. Garras em formato Y (ramos das garras fundidos por um trecho); sem gancho evidente na lâmina ventral.",
         next: "macrobiotidae_generos_1",
-        image: "assets/key-images/fig14-garras-Y.jpg",
+        image: "assets/fig7.png",
       },
     ],
   },
