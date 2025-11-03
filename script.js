@@ -829,7 +829,7 @@ const keySteps = {
   // ============================================================
   1: {
     title: "Filo Tardigrada: Classes",
-    question: "1. Observe a presença de cirros laterais A na cabeça (Fig. 1):",
+    question: "1. Observe a presença de cirros laterais A na cabeça:",
     options: [
       {
         text: "1. Cirros laterais A presentes.",
@@ -839,7 +839,7 @@ const keySteps = {
       {
         text: "1'. Cirros laterais A ausentes.",
         next: "eutardigrada_ordens",
-        image: "assets/key-images/fig1-cirros-A-ausentes.jpg",
+        noImage: true,
       },
     ],
   },
@@ -851,7 +851,7 @@ const keySteps = {
   // HETEROTARDIGRADA: Ordens
   heterotardigrada_ordens: {
     title: "Classe Heterotardigrada: Ordens",
-    question: "1. Observe o cirro mediano e a inserção das garras (Fig. 2):",
+    question: "1. Observe o cirro mediano e a inserção das garras:",
     options: [
       {
         text: "1. Cirro mediano geralmente presente; dígitos ou garras inseridos diretamente na perna.",
@@ -859,9 +859,9 @@ const keySteps = {
         image: "assets/fig2.png",
       },
       {
-        text: "1'. Cirro mediano ausente; cada garra e uma papila inserida na perna.",
+        text: "1'. Cirro mediano ausente; cada garra inserida na perna.",
         next: "echiniscoidea_familias",
-        image: "assets/fig3.png",
+        noImage: true,
       },
     ],
   },
@@ -878,20 +878,28 @@ const keySteps = {
   // ORDEM ECHINISCOIDEA: Famílias
   echiniscoidea_familias: {
     title: "Ordem Echiniscoidea: Famílias",
-    question:
-      "1. Observe o número de garras por perna e as placas dorsais (Fig. 3):",
+    question: "1. Observe o número de garras por perna e as placas dorsais:",
     options: [
       {
         text: "1. Quatro garras por perna em adultos; com placas dorsais-laterais.",
-        next: "echiniscidae_generos_1",
+        next: "echiniscidae_result",
         image: "assets/fig4.png",
       },
       {
-        text: "1'. Duas garras nas pernas I–III, uma garra na perna IV em adultos; cutícula sem placas dorsais.",
+        text: "1'. Duas garras nas pernas, uma garra na perna em adultos;",
         next: "carphaniidae_result",
-        image: "assets/key-images/fig3-duas-garras.jpg",
+        noImage: true,
       },
     ],
+  },
+
+  // FAMÍLIA ECHINISCIDAE (resultado final)
+  echiniscidae_result: {
+    title: "Resultado: Família Echiniscidae",
+    result: "Família Echiniscidae",
+    description:
+      "Quatro garras por perna em adultos; com placas dorsais-laterais. Três gêneros principais: Echiniscus, Pseudechiniscus e Hypechiniscus.",
+    image: "assets/fig4.png",
   },
 
   // FAMÍLIA CARPHANIIDAE (resultado final)
@@ -900,67 +908,8 @@ const keySteps = {
     result: "Gênero Carphania",
     description:
       "Um gênero: Carphania. Duas garras nas pernas I–III, uma garra na perna IV; cutícula sem placas dorsais; cirrus A muito curto.",
-    image: "assets/key-results/Carphania.jpg",
+    noImage: true,
   },
-
-  // FAMÍLIA ECHINISCIDAE: Chave para gêneros
-  echiniscidae_generos_1: {
-    title: "Família Echiniscidae: Gêneros (1/2)",
-    question: "1. Observe a placa pseudosegmentar (Fig. 4):",
-    options: [
-      {
-        text: "1. Placa pseudosegmentar ausente.",
-        next: "echiniscidae_generos_2",
-        image: "assets/key-images/fig4-pseudosegmentar-ausente.jpg",
-      },
-      {
-        text: "1'. Placa pseudosegmentar presente (entre a segunda placa em pares e a placa terminal).",
-        next: "pseudechiniscus_result",
-        image: "assets/key-images/fig4-pseudosegmentar-presente.jpg",
-      },
-    ],
-  },
-
-  pseudechiniscus_result: {
-    title: "Resultado: Gênero Pseudechiniscus",
-    result: "Gênero Pseudechiniscus",
-    description:
-      "Placa pseudosegmentar presente entre a segunda placa em pares e a placa terminal (Fig. 4).",
-    image: "assets/Pseudechiniscus.png",
-  },
-
-  echiniscidae_generos_2: {
-    title: "Família Echiniscidae: Gêneros (2/2)",
-    question: "2(1). Observe a placa terminal (Fig. 5):",
-    options: [
-      {
-        text: "2. Placa terminal entalhada.",
-        next: "echiniscus_result",
-        image: "assets/placa-entalhada.png",
-      },
-      {
-        text: "2'. Placa terminal dividida por suturas; olhos em manchas pretas.",
-        next: "hypechiniscus_result",
-        image: "assets/placa-dividida.png",
-      },
-    ],
-  },
-
-  echiniscus_result: {
-    title: "Resultado: Gênero Echiniscus",
-    result: "Gênero Echiniscus",
-    description: "Placa terminal entalhada (Fig. 5).",
-    image: "assets/Echiniscus.png",
-  },
-
-  hypechiniscus_result: {
-    title: "Resultado: Gênero Hypechiniscus",
-    result: "Gênero Hypechiniscus",
-    description:
-      "Placa terminal dividida por suturas; olhos em manchas pretas (Fig. 5).",
-    image: "assets/key-results/Hypechiniscus.jpg",
-  },
-
   // ============================================================
   // CLASSE EUTARDIGRADA
   // ============================================================
@@ -968,7 +917,7 @@ const keySteps = {
   // EUTARDIGRADA: Ordens
   eutardigrada_ordens: {
     title: "Classe Eutardigrada: Ordens",
-    question: "1. Observe as papilas cefálicas e os ganchos (Fig. 6):",
+    question: "1. Observe as papilas cefálicas e os ganchos:",
     options: [
       {
         text: "1. Cabeça sem papilas cefálicas; geralmente 2 ganchos duplos por perna.",
@@ -988,8 +937,8 @@ const keySteps = {
     title: "Resultado: Ordem Apochela",
     result: "Gênero Milnesium",
     description:
-      "Cabeça com papilas cefálicas; ganchos com ramo secundário não conectado ao primário; ovos lisos colocados dentro do exúvio; limnoterrestre (Fig. 7).",
-    image: "assets/key-results/Milnesium.jpg",
+      "Cabeça com papilas cefálicas; ganchos com ramo secundário não conectado ao primário; ovos lisos colocados dentro do exúvio; limnoterrestre.",
+    noImage: true,
   },
 
   // ============================================================
@@ -1000,7 +949,7 @@ const keySteps = {
   parachela_superfamilias: {
     title: "Ordem Parachela: Superfamílias",
     question:
-      "1. Observe a simetria das garras duplas (sequência de garras nas pernas I–IV) (Fig. 8):",
+      "1. Observe a simetria das garras duplas (sequência de garras nas pernas I–IV):",
     options: [
       {
         text: '1. Garras duplas "assimétricas" (sequência 2-1-2-1); tubo bucal sem lâmina ventral.',
@@ -1021,17 +970,17 @@ const keySteps = {
 
   hypsibioidea_isohypsibioidea: {
     title: "Superfamílias Isohypsibioidea e Hypsibioidea",
-    question: "2(1). Observe a forma das garras internas e externas (Fig. 9):",
+    question: "2(1). Observe a forma das garras internas e externas:",
     options: [
       {
         text: "2. Garras internas e externas de tamanho e forma semelhantes (tipo Isohypsibius, com ramos formando ângulo reto).",
         next: "isohypsibiidae_generos_1",
-        image: "assets/key-images/fig9-garras-isohypsibius.jpg",
+        noImage: true,
       },
       {
         text: "2'. Garras internas e externas de tamanho e forma claramente diferentes (tipo Hypsibius, com ramo secundário formando um arco).",
         next: "hypsibiidae_generos_1",
-        image: "assets/key-images/fig9-garras-hypsibius.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1042,17 +991,17 @@ const keySteps = {
 
   isohypsibiidae_generos_1: {
     title: "Família Isohypsibiidae: Gêneros (1/4)",
-    question: "1. Observe o tipo de garras (Fig. 9):",
+    question: "1. Observe o tipo de garras:",
     options: [
       {
         text: "1. Ramo secundário de cada garra formando um ângulo reto com o ramo primário (tipo Isohypsibius).",
         next: "isohypsibiidae_generos_2",
-        image: "assets/key-images/fig9-garras-isohypsibius.jpg",
+        noImage: true,
       },
       {
         text: "1'. Garra externa do tipo Hypsibius com ramo primário extremamente longo e esbelto; garra interna do tipo Isohypsibius.",
         next: "ramajendas_result",
-        image: "assets/key-results/Ramajendas.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1062,22 +1011,22 @@ const keySteps = {
     result: "Gênero Ramajendas",
     description:
       "Garra externa do tipo Hypsibius com ramo primário extremamente longo e esbelto; garra interna do tipo Isohypsibius.",
-    image: "assets/key-results/Ramajendas.jpg",
+    noImage: true,
   },
 
   isohypsibiidae_generos_2: {
     title: "Família Isohypsibiidae: Gêneros (2/4)",
-    question: "2(1). Observe a lâmina ventral no tubo bucal (Fig. 10):",
+    question: "2(1). Observe a lâmina ventral no tubo bucal:",
     options: [
       {
         text: "2. Lâmina ventral ausente.",
         next: "isohypsibiidae_generos_3",
-        image: "assets/key-images/fig10-lamina-ventral-ausente.jpg",
+        noImage: true,
       },
       {
         text: "2'. Lâmina ventral presente.",
         next: "doryphoribius_result",
-        image: "assets/key-images/fig10-lamina-ventral-presente.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1085,25 +1034,24 @@ const keySteps = {
   doryphoribius_result: {
     title: "Resultado: Gênero Doryphoribius",
     result: "Gênero Doryphoribius",
-    description:
-      "Lâmina ventral presente no tubo bucal (Fig. 10); limnoterrestre.",
-    image: "assets/key-results/Doryphoribius.jpg",
+    description: "Lâmina ventral presente no tubo bucal; limnoterrestre.",
+    noImage: true,
   },
 
   isohypsibiidae_generos_3: {
     title: "Família Isohypsibiidae: Gêneros (3/4)",
     question:
-      "3(2). Observe as lamelas peribuccais ao redor da abertura bucal (Fig. 11):",
+      "3(2). Observe as lamelas peribuccais ao redor da abertura bucal:",
     options: [
       {
         text: "3. Lamelas peribuccais ausentes.",
         next: "isohypsibius_result",
-        image: "assets/key-images/fig11-lamelas-ausentes.jpg",
+        noImage: true,
       },
       {
         text: "3'. Lamelas peribuccais presentes (pode ser difícil de ver).",
         next: "isohypsibiidae_generos_4",
-        image: "assets/key-images/fig11-lamelas-presentes.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1111,24 +1059,23 @@ const keySteps = {
   isohypsibius_result: {
     title: "Resultado: Gênero Isohypsibius",
     result: "Gênero Isohypsibius",
-    description:
-      "Lamelas peribuccais ao redor da abertura bucal ausentes (Fig. 11).",
-    image: "assets/key-results/Isohypsibius.jpg",
+    description: "Lamelas peribuccais ao redor da abertura bucal ausentes.",
+    noImage: true,
   },
 
   isohypsibiidae_generos_4: {
     title: "Família Isohypsibiidae: Gêneros (4/4)",
-    question: "4(3). Conte as lamelas peribuccais (Fig. 11):",
+    question: "4(3). Conte as lamelas peribuccais:",
     options: [
       {
         text: "4. Cerca de 30 lamelas peribuccais presentes.",
         next: "pseudobiotus_result",
-        image: "assets/key-results/Pseudobiotus.jpg",
+        noImage: true,
       },
       {
         text: "4'. Doze lamelas peribuccais presentes, frequentemente fundidas.",
         next: "thulinius_result",
-        image: "assets/key-results/Thulinius.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1136,16 +1083,16 @@ const keySteps = {
   pseudobiotus_result: {
     title: "Resultado: Gênero Pseudobiotus",
     result: "Gênero Pseudobiotus",
-    description: "Cerca de 30 lamelas peribuccais presentes (Fig. 11).",
-    image: "assets/key-results/Pseudobiotus.jpg",
+    description: "Cerca de 30 lamelas peribuccais presentes.",
+    noImage: true,
   },
 
   thulinius_result: {
     title: "Resultado: Gênero Thulinius",
     result: "Gênero Thulinius",
     description:
-      "Doze lamelas peribuccais presentes, frequentemente fundidas; uma ou duas barras cuticulares sob as bases das garras (Fig. 11).",
-    image: "assets/key-results/Thulinius.jpg",
+      "Doze lamelas peribuccais presentes, frequentemente fundidas; uma ou duas barras cuticulares sob as bases das garras.",
+    noImage: true,
   },
 
   // ============================================================
@@ -1154,34 +1101,34 @@ const keySteps = {
 
   hypsibiidae_generos_1: {
     title: "Família Hypsibiidae: Gêneros (1/5)",
-    question: "1. Observe o tipo das garras externas (Fig. 9):",
+    question: "1. Observe o tipo das garras externas:",
     options: [
       {
         text: "1. Garras externas do tipo Isohypsibius (ramo secundário formando ângulo reto).",
         next: "hypsibiidae_generos_2",
-        image: "assets/key-images/fig9-garras-isohypsibius.jpg",
+        noImage: true,
       },
       {
         text: "1'. Garras externas do tipo Hypsibius (ramo secundário formando arco).",
         next: "hypsibiidae_generos_3",
-        image: "assets/key-images/fig9-garras-hypsibius.jpg",
+        noImage: true,
       },
     ],
   },
 
   hypsibiidae_generos_2: {
     title: "Família Hypsibiidae: Gêneros (2/5)",
-    question: "2(1). Observe o tipo das garras internas (Fig. 9):",
+    question: "2(1). Observe o tipo das garras internas:",
     options: [
       {
         text: "2. Garras internas do tipo Isohypsibius modificado (ângulo > 90 graus); apofises assimétricas.",
         next: "mixibius_result",
-        image: "assets/key-results/Mixibius.jpg",
+        noImage: true,
       },
       {
         text: "2'. Garras internas do tipo Hypsibius; apofises simétricas.",
         next: "acutuncus_result",
-        image: "assets/key-results/Acutuncus.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1190,31 +1137,31 @@ const keySteps = {
     title: "Resultado: Gênero Mixibius",
     result: "Gênero Mixibius",
     description:
-      "Garras internas do tipo Isohypsibius modificado (ângulo > 90 graus); apofises assimétricas (Fig. 9).",
-    image: "assets/key-results/Mixibius.jpg",
+      "Garras internas do tipo Isohypsibius modificado (ângulo > 90 graus); apofises assimétricas.",
+    noImage: true,
   },
 
   acutuncus_result: {
     title: "Resultado: Gênero Acutuncus",
     result: "Gênero Acutuncus",
     description:
-      "Garras internas do tipo Hypsibius; apofises simétricas; ovos com processos postos livremente (Fig. 9).",
-    image: "assets/key-results/Acutuncus.jpg",
+      "Garras internas do tipo Hypsibius; apofises simétricas; ovos com processos postos livremente.",
+    noImage: true,
   },
 
   hypsibiidae_generos_3: {
     title: "Família Hypsibiidae: Gêneros (3/5)",
-    question: "3(1). Observe a estrutura do tubo bucal (Fig. 12):",
+    question: "3(1). Observe a estrutura do tubo bucal:",
     options: [
       {
         text: "3. Tubo bucal rígido, sem parte posterior de composição flexível e espiral.",
         next: "hypsibius_result",
-        image: "assets/key-images/fig12-tubo-rigido.jpg",
+        noImage: true,
       },
       {
         text: "3'. Tubo bucal com parte posterior de composição flexível e espiral (tubo faríngeo).",
         next: "hypsibiidae_generos_4",
-        image: "assets/key-images/fig12-tubo-flexivel.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1223,24 +1170,23 @@ const keySteps = {
     title: "Resultado: Gênero Hypsibius",
     result: "Gênero Hypsibius",
     description:
-      "Tubo bucal rígido, sem parte posterior de composição flexível e espiral (Fig. 12); limnoterrestre.",
-    image: "assets/key-results/Hypsibius.jpg",
+      "Tubo bucal rígido, sem parte posterior de composição flexível e espiral; limnoterrestre.",
+    noImage: true,
   },
 
   hypsibiidae_generos_4: {
     title: "Família Hypsibiidae: Gêneros (4/5)",
-    question:
-      "4(3). Observe o espessamento em forma de gota no tubo bucal (Fig. 12):",
+    question: "4(3). Observe o espessamento em forma de gota no tubo bucal:",
     options: [
       {
         text: "4. Espessamento em forma de gota (entre as porções rígidas e flexíveis) AUSENTE.",
         next: "adropion_result",
-        image: "assets/key-images/fig12-sem-gota.jpg",
+        noImage: true,
       },
       {
         text: "4'. Espessamento em forma de gota (entre as porções rígidas e flexíveis) PRESENTE.",
         next: "hypsibiidae_generos_5",
-        image: "assets/key-images/fig12-com-gota.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1249,24 +1195,23 @@ const keySteps = {
     title: "Resultado: Gênero Adropion",
     result: "Gênero Adropion",
     description:
-      "Espessamento em forma de gota entre as porções rígidas e flexíveis do tubo bucal ausente (Fig. 12).",
-    image: "assets/key-results/Adropion.jpg",
+      "Espessamento em forma de gota entre as porções rígidas e flexíveis do tubo bucal ausente.",
+    noImage: true,
   },
 
   hypsibiidae_generos_5: {
     title: "Família Hypsibiidae: Gêneros (5/5)",
-    question:
-      "5(4). Observe os macroplacóides (estruturas na faringe) (Fig. 13):",
+    question: "5(4). Observe os macroplacóides (estruturas na faringe):",
     options: [
       {
         text: "5. Dois macroplacóides semelhantes em comprimento, organizados em fileiras (parecem parênteses); septo presente.",
         next: "pilatobius_result",
-        image: "assets/key-images/fig13-dois-macroplacoides-septo.jpg",
+        noImage: true,
       },
       {
         text: "5'. Dois macroplacóides sem septo OU três macroplacóides com ou sem septo.",
         next: "diphascon_result",
-        image: "assets/key-images/fig13-macroplacoides-variados.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1275,16 +1220,16 @@ const keySteps = {
     title: "Resultado: Gênero Pilatobius",
     result: "Gênero Pilatobius",
     description:
-      "Dois macroplacóides semelhantes em comprimento, organizados em fileiras (parecem parênteses); septo presente (Fig. 13).",
-    image: "assets/key-results/Pilatobius.jpg",
+      "Dois macroplacóides semelhantes em comprimento, organizados em fileiras (parecem parênteses); septo presente.",
+    noImage: true,
   },
 
   diphascon_result: {
     title: "Resultado: Gênero Diphascon",
     result: "Gênero Diphascon",
     description:
-      "Dois macroplacóides sem septo ou três macroplacóides com ou sem septo (Fig. 13).",
-    image: "assets/key-results/Diphascon.jpg",
+      "Dois macroplacóides sem septo ou três macroplacóides com ou sem septo.",
+    noImage: true,
   },
 
   // ============================================================
@@ -1293,7 +1238,7 @@ const keySteps = {
 
   macrobiotoidea_familias: {
     title: "Superfamília Macrobiotoidea: Famílias",
-    question: "1. Observe o formato das garras e a lâmina ventral (Fig. 14):",
+    question: "1. Observe o formato das garras e a lâmina ventral:",
     options: [
       {
         text: "1. Garras em formato L ou V (ramos das garras divergindo desde a base); gancho evidente na lâmina ventral.",
@@ -1314,17 +1259,17 @@ const keySteps = {
 
   murrayidae_generos: {
     title: "Família Murrayidae: Gêneros",
-    question: "1. Observe as garras e espessamentos cuticulares (Fig. 14):",
+    question: "1. Observe as garras e espessamentos cuticulares:",
     options: [
       {
         text: "1. Garras em forma de L muito bem desenvolvidas, com espessamentos cuticulares conectando a base das garras em cada perna.",
         next: "dactylobiotus_result",
-        image: "assets/key-results/Dactylobiotus.jpg",
+        noImage: true,
       },
       {
         text: "1'. Garras em forma de V, sem espessamentos cuticulares conectando a base das garras em cada perna, com lunulas.",
         next: "murrayon_result",
-        image: "assets/key-results/Murrayon.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1333,16 +1278,16 @@ const keySteps = {
     title: "Resultado: Gênero Dactylobiotus",
     result: "Gênero Dactylobiotus",
     description:
-      "Garras em forma de L muito bem desenvolvidas, com espessamentos cuticulares conectando a base das garras em cada perna (Fig. 14); limnoterrestres.",
-    image: "assets/key-results/Dactylobiotus.jpg",
+      "Garras em forma de L muito bem desenvolvidas, com espessamentos cuticulares conectando a base das garras em cada perna; limnoterrestres.",
+    noImage: true,
   },
 
   murrayon_result: {
     title: "Resultado: Gênero Murrayon",
     result: "Gênero Murrayon",
     description:
-      "Garras em forma de V, sem espessamentos cuticulares conectando a base das garras em cada perna, com lunulas (Fig. 14); limnoterrestres.",
-    image: "assets/key-results/Murrayon.jpg",
+      "Garras em forma de V, sem espessamentos cuticulares conectando a base das garras em cada perna, com lunulas; limnoterrestres.",
+    noImage: true,
   },
 
   // ============================================================
@@ -1351,17 +1296,17 @@ const keySteps = {
 
   macrobiotidae_generos_1: {
     title: "Família Macrobiotidae: Gêneros (1/3)",
-    question: "1. Conte os macroplacóides na faringe (Fig. 13):",
+    question: "1. Conte os macroplacóides na faringe:",
     options: [
       {
         text: "1. Três macroplacóides.",
         next: "macrobiotidae_generos_2",
-        image: "assets/key-images/fig13-tres-macroplacoides.jpg",
+        noImage: true,
       },
       {
         text: "1'. Dois macroplacóides; microplacóide, se presente, próximo ao segundo macroplacóide.",
         next: "macrobiotus_result",
-        image: "assets/key-results/Macrobiotus.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1370,24 +1315,23 @@ const keySteps = {
     title: "Resultado: Gênero Macrobiotus",
     result: "Gênero Macrobiotus",
     description:
-      "Dois macroplacóides; microplacóide, se presente, próximo ao segundo macroplacóide; cutícula com ou sem poros; ovos com processos de vários tipos (Fig. 13).",
-    image: "assets/key-results/Macrobiotus.jpg",
+      "Dois macroplacóides; microplacóide, se presente, próximo ao segundo macroplacóide; cutícula com ou sem poros; ovos com processos de vários tipos.",
+    noImage: true,
   },
 
   macrobiotidae_generos_2: {
     title: "Família Macrobiotidae: Gêneros (2/3)",
-    question:
-      "2(1). Observe a forma dos macroplacóides e lamelas bucais (Fig. 13):",
+    question: "2(1). Observe a forma dos macroplacóides e lamelas bucais:",
     options: [
       {
         text: "2. Macroplacóides em forma de haste; lamelas bucais presentes.",
         next: "macrobiotidae_generos_3",
-        image: "assets/key-images/fig13-macroplacoides-haste.jpg",
+        noImage: true,
       },
       {
         text: "2'. Macroplacóides redondos; microplacóide presente; lamelas bucais ausentes.",
         next: "minibiotus_result",
-        image: "assets/key-results/Minibiotus.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1396,24 +1340,23 @@ const keySteps = {
     title: "Resultado: Gênero Minibiotus",
     result: "Gênero Minibiotus",
     description:
-      "Macroplacóides redondos; microplacóide presente; lamelas bucais ausentes; pápulas presentes (Fig. 13).",
-    image: "assets/key-results/Minibiotus.jpg",
+      "Macroplacóides redondos; microplacóide presente; lamelas bucais ausentes; pápulas presentes.",
+    noImage: true,
   },
 
   macrobiotidae_generos_3: {
     title: "Família Macrobiotidae: Gêneros (3/3)",
-    question:
-      "3(2). Observe a posição do microplacóide (se presente) (Fig. 13):",
+    question: "3(2). Observe a posição do microplacóide (se presente):",
     options: [
       {
         text: "3. Microplacóide sempre presente e claramente próximo ao terceiro macroplacóide (menos que seu comprimento).",
         next: "mesobiotus_result",
-        image: "assets/key-results/Mesobiotus.jpg",
+        noImage: true,
       },
       {
         text: "3'. Microplacóide, se presente, distante do terceiro macroplacóide (mais que seu comprimento).",
         next: "paramacrobiotus_result",
-        image: "assets/key-results/Paramacrobiotus.jpg",
+        noImage: true,
       },
     ],
   },
@@ -1422,16 +1365,16 @@ const keySteps = {
     title: "Resultado: Gênero Mesobiotus",
     result: "Gênero Mesobiotus",
     description:
-      "Microplacóide sempre presente e claramente próximo ao terceiro macroplacóide (menos que seu comprimento); garra característica com septo interno (Fig. 13).",
-    image: "assets/key-results/Mesobiotus.jpg",
+      "Microplacóide sempre presente e claramente próximo ao terceiro macroplacóide (menos que seu comprimento); garra característica com septo interno.",
+    noImage: true,
   },
 
   paramacrobiotus_result: {
     title: "Resultado: Gênero Paramacrobiotus",
     result: "Gênero Paramacrobiotus",
     description:
-      "Microplacóide, se presente, distante do terceiro macroplacóide (mais que seu comprimento); ovos sempre com grandes processos reticulados (Fig. 13).",
-    image: "assets/key-results/Paramacrobiotus.jpg",
+      "Microplacóide, se presente, distante do terceiro macroplacóide (mais que seu comprimento); ovos sempre com grandes processos reticulados.",
+    noImage: true,
   },
 };
 
@@ -1480,11 +1423,21 @@ function showStep(step) {
         .map(
           (option) => `
         <button class="key-option" data-step="${option.next}">
-          <img src="${
-            option.image || "assets/tardigrade-icon.png"
-          }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="Imagem para ${escapeHtml(
-            option.text
-          )}" class="key-option-image">
+          ${
+            option.noImage
+              ? `
+            <div style="display: flex; align-items: center; justify-content: center; width: 180px; height: 150px; background: rgba(0,0,0,0.05); border-radius: 8px; border: 2px dashed rgba(0,0,0,0.2);">
+              <div style="background: rgba(0,0,0,0.7); color: white; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">Sem imagem</div>
+            </div>
+          `
+              : `
+            <img src="${
+              option.image || "assets/tardigrade-photo.jpg"
+            }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="Imagem para ${escapeHtml(
+                  option.text
+                )}" class="key-option-image">
+          `
+          }
           <div class="key-option-text">${escapeHtml(option.text)}</div>
         </button>
       `
@@ -1510,11 +1463,21 @@ function showResult(step) {
       ${parabensMsg}
       <h4>Identificação: ${escapeHtml(step.result)}</h4>
       <p>${escapeHtml(step.description)}</p>
-      <img src="${
-        step.image || "assets/tardigrade-icon.png"
-      }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="Imagem de ${escapeHtml(
-    step.result
-  )}" class="result-image">
+      ${
+        step.noImage
+          ? `
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 400px; height: 300px; background: rgba(0,0,0,0.05); border-radius: 12px; border: 3px dashed rgba(0,0,0,0.2); margin-top: 20px;">
+          <div style="background: rgba(0,0,0,0.75); color: white; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600;">Sem imagem disponível</div>
+        </div>
+      `
+          : `
+        <img src="${
+          step.image || "assets/tardigrade-photo.jpg"
+        }" onerror="this.onerror=null;this.src='assets/tardigrade-photo.jpg'" alt="Imagem de ${escapeHtml(
+              step.result
+            )}" class="result-image">
+      `
+      }
     </div>
   `;
 
@@ -1763,14 +1726,14 @@ const tardigradeStructures = [
     name: "Placas Dorsais e Laterais",
     description:
       "Armadura cuticular protetora encontrada em Echiniscoidea (ex: Echiniscus). Ausente em Eutardigrada.",
-    image: "assets/key-images/4-garras-placas.jpg",
+    noImage: true,
   },
   {
     id: "papilas-cefalicas",
     name: "Papilas Cefálicas",
     description:
       "Pequenas protuberâncias sensoriais na cabeça, características da Ordem Apochela (ex: Milnesium).",
-    image: "papilas.png",
+    image: "assets/papilas.png",
   },
   {
     id: "garras-assimetricas",
@@ -1819,14 +1782,14 @@ const tardigradeStructures = [
     name: "Lâmina Ventral",
     description:
       "Uma estrutura presente no tubo bucal de alguns gêneros, como Doryphoribius.",
-    image: "assets/key-images/lamina-ventral-presente.jpg",
+    noImage: true,
   },
   {
     id: "lamelas-peribuccais",
     name: "Lamelas Peribuccais",
     description:
       "Anel de lamelas delicadas ao redor da boca. Presentes em gêneros como Pseudobiotus.",
-    image: "assets/key-images/lamelas-presentes.jpg",
+    noImage: true,
   },
 ];
 

@@ -1042,20 +1042,42 @@ p {
   }
 
   .hero-content {
-    padding: 60px 0;
+    padding: 60px 30px;
+  }
+
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+
+  .hero-description {
+    font-size: 1.05rem;
+    margin-bottom: 50px;
   }
 
   .menu-buttons {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .menu-btn {
+    padding: 32px 24px;
+  }
+
+  .menu-btn i {
+    font-size: 3rem;
+  }
+
+  .menu-btn h3 {
+    font-size: 1.4rem;
   }
 
   .menu-btn {
     padding: 20px 16px;
-  }
-
-  .menu-btn h3 {
-    font-size: 1.1rem;
   }
 
   .menu-btn p {
@@ -1106,6 +1128,22 @@ p {
     text-align: center;
   }
 
+  .hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    padding: 0 10px;
+  }
+
   /* Botões do menu principal */
   .menu-buttons {
     grid-template-columns: 1fr; /* 1 coluna em mobile */
@@ -1117,6 +1155,20 @@ p {
     padding: 24px 20px;
     text-align: left;
     width: 100%; /* Largura total */
+  }
+
+  .menu-btn i {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .menu-btn h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .menu-btn p {
+    font-size: 0.95rem;
   }
 
   .menu-btn i {
@@ -1802,8 +1854,11 @@ html {
 .hero-description {
   font-size: 1.1rem;
   color: var(--text-secondary);
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   line-height: 1.7;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Grid de botões do menu principal */
@@ -1816,6 +1871,7 @@ html {
   gap: 32px;
   max-width: 1000px;
   margin: 0 auto;
+  margin-top: 60px;
 }
 
 /* Cada botão do menu principal */
@@ -1999,6 +2055,14 @@ html {
   transform: scale(1.05); /* Efeito de zoom na imagem */
 }
 
+/* Aumentar imagens da chave dicotômica no mobile */
+@media (max-width: 767px) {
+  .key-option-image {
+    width: 180px;
+    height: 150px;
+  }
+}
+
 /* 3. NOVA classe para o container do TEXTO da opção */
 .key-option-text {
   flex-grow: 1;
@@ -2032,6 +2096,12 @@ html {
   padding: 20px;
   border-radius: var(--radius-small);
   margin-bottom: 20px;
+}
+
+.result-card > div {
+  display: inline-block;
+  width: 100%;
+  max-width: 500px;
 }
 
 /* Estilos específicos para a chave dicotômica de Tardigrada */
