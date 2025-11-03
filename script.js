@@ -882,24 +882,73 @@ const keySteps = {
     options: [
       {
         text: "1. Quatro garras por perna em adultos; com placas dorsais-laterais.",
-        next: "echiniscidae_result",
+        next: "echiniscidae_familias",
         image: "assets/fig4.png",
       },
       {
-        text: "1'. Duas garras nas pernas, uma garra na perna em adultos;",
+        text: "1'. Duas garras nas pernas I-III, uma garra na perna IV em adultos; cutícula sem placas dorsais; cirrus A muito curto.",
         next: "carphaniidae_result",
         noImage: true,
       },
     ],
   },
 
-  // FAMÍLIA ECHINISCIDAE (resultado final)
-  echiniscidae_result: {
-    title: "Resultado: Família Echiniscidae",
-    result: "Família Echiniscidae",
+  // FAMÍLIA ECHINISCIDAE: Gêneros
+  echiniscidae_familias: {
+    title: "Família Echiniscidae: Gêneros",
+    question: "1. Observe a placa pseudosegmentar:",
+    options: [
+      {
+        text: "1. Placa pseudosegmentar ausente.",
+        next: "echiniscidae_generos_2",
+        noImage: true,
+      },
+      {
+        text: "1'. Placa pseudosegmentar presente entre a segunda placa em pares e a placa terminal.",
+        next: "pseudechiniscus_result",
+        image: "assets/Pseudechiniscus.png",
+      },
+    ],
+  },
+
+  pseudechiniscus_result: {
+    title: "Resultado: Gênero Pseudechiniscus",
+    result: "Gênero Pseudechiniscus",
     description:
-      "Quatro garras por perna em adultos; com placas dorsais-laterais. Três gêneros principais: Echiniscus, Pseudechiniscus e Hypechiniscus.",
-    image: "assets/fig4.png",
+      "Placa pseudosegmentar presente entre a segunda placa em pares e a placa terminal.",
+    image: "assets/Pseudechiniscus.png",
+  },
+
+  echiniscidae_generos_2: {
+    title: "Família Echiniscidae: Gêneros",
+    question: "2(1). Observe a placa terminal:",
+    options: [
+      {
+        text: "2. Placa terminal entalhada.",
+        next: "echiniscus_result",
+        image: "assets/placa-entalhada.png",
+      },
+      {
+        text: "2'. Placa terminal dividida por suturas; olhos em manchas pretas; acidental.",
+        next: "hypechiniscus_result",
+        image: "assets/placa-dividida.png",
+      },
+    ],
+  },
+
+  echiniscus_result: {
+    title: "Resultado: Gênero Echiniscus",
+    result: "Gênero Echiniscus",
+    description: "Placa terminal entalhada.",
+    image: "assets/placa-entalhada.png",
+  },
+
+  hypechiniscus_result: {
+    title: "Resultado: Gênero Hypechiniscus",
+    result: "Gênero Hypechiniscus",
+    description:
+      "Placa terminal dividida por suturas; olhos em manchas pretas; acidental.",
+    image: "assets/placa-dividida.png",
   },
 
   // FAMÍLIA CARPHANIIDAE (resultado final)
@@ -907,7 +956,7 @@ const keySteps = {
     title: "Resultado: Família Carphaniidae",
     result: "Gênero Carphania",
     description:
-      "Um gênero: Carphania. Duas garras nas pernas I–III, uma garra na perna IV; cutícula sem placas dorsais; cirrus A muito curto.",
+      "Um gênero: Carphania. Duas garras nas pernas, uma garra na perna; cutícula sem placas dorsais;",
     noImage: true,
   },
   // ============================================================
