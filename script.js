@@ -4,6 +4,48 @@
 // ===================================
 
 // ============================================================
+// CONTROLE DE VERSÃO E CACHE
+// ============================================================
+const APP_VERSION = "2.0.0";
+
+// Verifica e atualiza a versão do cache
+function checkCacheVersion() {
+  const storedVersion = localStorage.getItem("tardistudy_version");
+
+  if (storedVersion !== APP_VERSION) {
+    // Nova versão detectada - limpa o cache
+    console.log(
+      `Atualizando de ${storedVersion || "versão antiga"} para ${APP_VERSION}`
+    );
+
+    // Limpa localStorage seletivamente (mantém os registros de tardigrada)
+    const tardiRecords = localStorage.getItem("tardiRecords");
+    localStorage.clear();
+    if (tardiRecords) {
+      localStorage.setItem("tardiRecords", tardiRecords);
+    }
+
+    // Salva nova versão
+    localStorage.setItem("tardistudy_version", APP_VERSION);
+
+    // Limpa cache do Service Worker se existir
+    if ("caches" in window) {
+      caches.keys().then(function (names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+
+    // Recarrega a página para garantir novos arquivos
+    window.location.reload(true);
+  }
+}
+
+// Executa verificação ao carregar
+checkCacheVersion();
+
+// ============================================================
 // MENU MOBILE E NAVEGAÇÃO RESPONSIVA
 // ============================================================
 let isMobileMenuOpen = false;
@@ -308,6 +350,196 @@ let map = null;
 let markers = [];
 let currentStep = "1"; // Usar string para IDs
 let choiceHistory = [];
+let savedSearches = []; // Histórico de pesquisas salvas
+
+// ============================================================
+// SISTEMA DE HISTÓRICO DE PESQUISAS
+// ============================================================
+
+// Carrega histórico de pesquisas salvas do localStorage
+function loadSavedSearches() {
+  const saved = localStorage.getItem("tardiSearchHistory");
+  if (saved) {
+    try {
+      savedSearches = JSON.parse(saved);
+    } catch (e) {
+      console.error("Erro ao carregar histórico de pesquisas:", e);
+      savedSearches = [];
+    }
+  }
+  renderSavedSearches();
+}
+
+// Salva histórico de pesquisas no localStorage
+function saveSavedSearches() {
+  localStorage.setItem("tardiSearchHistory", JSON.stringify(savedSearches));
+}
+
+// Salva a pesquisa atual quando chega no resultado
+function saveCurrentSearch(result, description) {
+  const searchData = {
+    id: Date.now().toString(),
+    date: new Date().toISOString(),
+    result: result,
+    description: description,
+    history: [...choiceHistory], // Copia o histórico de escolhas
+    currentStep: currentStep,
+  };
+
+  // Adiciona no início do array (mais recente primeiro)
+  savedSearches.unshift(searchData);
+
+  // Limita a 20 pesquisas salvas
+  if (savedSearches.length > 20) {
+    savedSearches = savedSearches.slice(0, 20);
+  }
+
+  saveSavedSearches();
+  renderSavedSearches();
+}
+
+// Renderiza o histórico de pesquisas salvas
+function renderSavedSearches() {
+  const container = document.getElementById("saved-searches-list");
+  const clearBtn = document.getElementById("clear-history-btn");
+  if (!container) return;
+
+  if (savedSearches.length === 0) {
+    container.innerHTML = `
+      <div class="no-searches">
+        Nenhuma identificação salva ainda.
+      </div>
+    `;
+    // Oculta o botão de limpar se não houver pesquisas
+    if (clearBtn) clearBtn.style.display = "none";
+    return;
+  }
+
+  // Mostra o botão de limpar se houver pesquisas
+  if (clearBtn) clearBtn.style.display = "inline-flex";
+
+  container.innerHTML = savedSearches
+    .map((search) => {
+      const date = new Date(search.date);
+      const dateStr = date.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      return `
+        <div class="saved-search-item" data-search-id="${search.id}">
+          <div class="saved-search-header">
+            <div class="saved-search-title">
+              <i class="fas fa-microscope"></i>
+              ${escapeHtml(search.result)}
+            </div>
+            <div class="saved-search-date">
+              <i class="fas fa-clock"></i> ${dateStr}
+            </div>
+          </div>
+          <div class="saved-search-result">
+            ✓ Identificação completa
+          </div>
+          <div class="saved-search-actions">
+            <button class="btn-continue" onclick="continueSearch('${
+              search.id
+            }')">
+              <i class="fas fa-eye"></i> Ver Caminho
+            </button>
+            <button class="btn-delete-search" onclick="deleteSearch('${
+              search.id
+            }')">
+              <i class="fas fa-trash"></i> Apagar
+            </button>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+// Continua uma pesquisa salva (mostra o caminho expandindo o card)
+function continueSearch(searchId) {
+  const search = savedSearches.find((s) => s.id === searchId);
+  if (!search) return;
+
+  // Encontra o card da pesquisa
+  const searchCard = document.querySelector(`[data-search-id="${searchId}"]`);
+  if (!searchCard) return;
+
+  // Verifica se já existe o caminho expandido
+  let pathSection = searchCard.querySelector(".search-path-expanded");
+
+  if (pathSection) {
+    // Se já existe, apenas alterna a visibilidade
+    const isHidden = pathSection.style.display === "none";
+    pathSection.style.display = isHidden ? "block" : "none";
+
+    // Atualiza o botão
+    const btn = searchCard.querySelector(".btn-continue");
+    if (btn) {
+      btn.innerHTML = isHidden
+        ? '<i class="fas fa-eye-slash"></i> Ocultar Caminho'
+        : '<i class="fas fa-eye"></i> Ver Caminho';
+    }
+  } else {
+    // Cria a seção do caminho
+    pathSection = document.createElement("div");
+    pathSection.className = "search-path-expanded";
+    pathSection.innerHTML = `
+      <h5 style="margin: 16px 0 12px 0; color: var(--primary-dark); font-size: 1rem;">
+        <i class="fas fa-route"></i> Caminho Percorrido
+      </h5>
+      <ol class="path-steps-list">
+        ${search.history
+          .map((entry) => {
+            return `<li><strong>${escapeHtml(
+              entry.question
+            )}</strong><br><em>→ ${escapeHtml(entry.answer)}</em></li>`;
+          })
+          .join("")}
+      </ol>
+    `;
+
+    // Adiciona após as ações
+    const actionsDiv = searchCard.querySelector(".saved-search-actions");
+    if (actionsDiv) {
+      actionsDiv.parentNode.insertBefore(pathSection, actionsDiv.nextSibling);
+    }
+
+    // Atualiza o botão
+    const btn = searchCard.querySelector(".btn-continue");
+    if (btn) {
+      btn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Caminho';
+    }
+  }
+
+  // Rola suavemente para o card
+  searchCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+// Apaga uma pesquisa do histórico
+function deleteSearch(searchId) {
+  if (confirm("Deseja realmente apagar esta identificação do histórico?")) {
+    savedSearches = savedSearches.filter((s) => s.id !== searchId);
+    saveSavedSearches();
+    renderSavedSearches();
+    showNotification("Identificação removida do histórico", "success");
+  }
+}
+
+// Apaga todo o histórico
+function clearAllSearches() {
+  if (confirm("Deseja realmente apagar TODAS as identificações salvas?")) {
+    savedSearches = [];
+    saveSavedSearches();
+    renderSavedSearches();
+    showNotification("Histórico completamente limpo", "success");
+  }
+}
 
 // ============================================================
 // MAPA INTERATIVO LEAFLET
@@ -1262,7 +1494,7 @@ function showStep(step) {
   `;
 }
 
-// (Função showResult ATUALIZADA para incluir "Parabéns!")
+// (Função showResult ATUALIZADA para incluir "Parabéns!" e salvar no histórico)
 function showResult(step) {
   document.getElementById("key-step").style.display = "none";
   document.getElementById("key-result").style.display = "block";
@@ -1285,6 +1517,10 @@ function showResult(step) {
   )}" class="result-image">
     </div>
   `;
+
+  // Salva a pesquisa automaticamente quando chega no resultado
+  saveCurrentSearch(step.result, step.description);
+
   // Não atualiza o histórico aqui, pois o histórico é atualizado no nextStep
 }
 
@@ -1293,15 +1529,6 @@ function resetKey() {
   choiceHistory = [];
   document.getElementById("key-step").style.display = "block";
   document.getElementById("key-result").style.display = "none";
-
-  const pathDisplay = document.getElementById("path-display");
-  const pathBtn = document.getElementById("path-btn");
-  if (pathDisplay) {
-    pathDisplay.style.display = "none";
-  }
-  if (pathBtn) {
-    pathBtn.innerHTML = '<i class="fas fa-route"></i> Mostrar Caminho';
-  }
 
   // Mostra o primeiro passo
   if (keySteps[currentStep]) {
@@ -1785,9 +2012,10 @@ function init() {
     resetKeyBtn.addEventListener("click", resetKey);
   }
 
-  const pathBtn = document.getElementById("path-btn");
-  if (pathBtn) {
-    pathBtn.addEventListener("click", showPath);
+  // Event Listener para Limpar Histórico
+  const clearHistoryBtn = document.getElementById("clear-history-btn");
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener("click", clearAllSearches);
   }
 
   // Inicialização da Página
@@ -1795,6 +2023,7 @@ function init() {
   // Renderiza os dados iniciais
   renderAll();
   renderStructures(); // Renderiza a galeria (para o filtro)
+  loadSavedSearches(); // Carrega o histórico de pesquisas salvas
 }
 
 // Executa Inicialização
@@ -1805,35 +2034,8 @@ if (document.readyState === "loading") {
 }
 
 // ============================================================
-// FUNÇÕES UTILITÁRES (showPath, escapeHtml)
+// FUNÇÕES UTILITÁRES (escapeHtml)
 // ============================================================
-function showPath() {
-  const pathDisplay = document.getElementById("path-display");
-  const pathSteps = document.getElementById("path-steps");
-  const pathBtn = document.getElementById("path-btn");
-  if (!pathDisplay || !pathSteps || !pathBtn) return;
-
-  if (pathDisplay.style.display === "none" || !pathDisplay.style.display) {
-    if (choiceHistory.length === 0) {
-      pathSteps.innerHTML =
-        '<li style="text-align: center; font-style: italic;">Nenhuma escolha feita ainda.</li>';
-    } else {
-      pathSteps.innerHTML = choiceHistory
-        .map((entry) => {
-          return `<li><strong>${escapeHtml(
-            entry.question
-          )}</strong><br><em>→ ${escapeHtml(entry.answer)}</em></li>`;
-        })
-        .join("");
-    }
-    pathDisplay.style.display = "block";
-    pathBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Caminho';
-  } else {
-    pathDisplay.style.display = "none";
-    pathBtn.innerHTML = '<i class="fas fa-route"></i> Mostrar Caminho';
-  }
-}
-
 function escapeHtml(text) {
   if (typeof text !== "string") {
     return text;

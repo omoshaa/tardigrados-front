@@ -35,6 +35,14 @@
   --text-muted: #8faab5; /* Texto discreto/desativado */
   --text-white: #ffffff; /* Texto branco para fundos escuros */
 
+  /* Cores de Estado (Sucesso, Erro, Aviso) */
+  --success: #2e7d32; /* Verde para sucesso */
+  --success-light: #e8f5e9; /* Verde claro para fundos de sucesso */
+  --danger: #d32f2f; /* Vermelho para ações perigosas */
+  --danger-light: #ffebee; /* Vermelho claro para fundos de erro */
+  --warning: #f57c00; /* Laranja para avisos */
+  --warning-light: #fff3e0; /* Laranja claro para fundos de aviso */
+
   /* Bordas e Sombras */
   --radius: 16px; /* Raio de borda grande */
   --radius-small: 8px; /* Raio de borda pequeno */
@@ -2091,7 +2099,7 @@ html {
 }
 
 .result-card::before {
-  content: "🦄"; /* Ícone representando microorganismo */
+  content: "🐻"; /* Ícone representando tardigrado (urso d'água) */
   position: absolute;
   top: 16px;
   right: 20px;
@@ -2297,6 +2305,563 @@ html {
   color: var(--text-secondary);
   font-size: 0.85rem;
   line-height: 1.4;
+}
+
+/* ============================================================
+   HISTÓRICO DE PESQUISAS SALVAS
+   ============================================================ */
+.saved-searches {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: var(--radius);
+  margin-top: 24px;
+  border-left: 4px solid var(--success);
+}
+
+.saved-searches h4 {
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+}
+
+.saved-searches h4::before {
+  content: "📚";
+  font-size: 1.2em;
+}
+
+.saved-search-item {
+  background: var(--bg-card);
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-small);
+  border-left: 4px solid var(--accent);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.saved-search-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.saved-search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.saved-search-title {
+  font-weight: 600;
+  color: var(--primary-dark);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.saved-search-date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.saved-search-result {
+  padding: 8px 12px;
+  background: var(--success-light);
+  border-radius: var(--radius-small);
+  color: var(--success);
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.saved-search-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-continue,
+.btn-delete-search {
+  padding: 10px 18px;
+  border-radius: var(--radius-small);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-continue {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-continue:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.btn-delete-search {
+  background: var(--danger);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.btn-delete-search:hover {
+  background: #c62828;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+  border-color: #b71c1c;
+}
+
+.no-searches {
+  text-align: center;
+  padding: 32px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.no-searches::before {
+  content: "🔍";
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+/* Caminho expandido dentro do card */
+.search-path-expanded {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-small);
+  border-left: 4px solid var(--primary);
+}
+
+.search-path-expanded h5 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.path-steps-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: step-counter;
+  margin: 0;
+}
+
+.path-steps-list li {
+  counter-increment: step-counter;
+  background: var(--bg-card);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: var(--radius-small);
+  position: relative;
+  padding-left: 50px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.path-steps-list li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.path-steps-list li strong {
+  color: var(--primary-dark);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.path-steps-list li em {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ============================================================
+   PÁGINA "SOBRE OS TARDÍGRADOS" - DESIGN MELHORADO
+   ============================================================ */
+
+/* Hero Card Principal */
+.tardigrade-hero-card {
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--primary) 100%
+  );
+  color: white;
+  padding: 40px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow-strong);
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tardigrade-hero-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.hero-emoji {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.tardigrade-hero-card h3 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Grid de Features */
+.tardigrade-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  padding: 28px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  border-left: 4px solid var(--primary);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+  border-color: var(--primary);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.feature-card h4 {
+  color: var(--primary-dark);
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.feature-card p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.feature-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-small);
+  margin-top: 12px;
+}
+
+.feature-detail i {
+  color: var(--primary);
+}
+
+/* Seção Criptobiose */
+.cryptobiosis-section {
+  background: linear-gradient(
+    135deg,
+    rgba(129, 199, 132, 0.1) 0%,
+    rgba(165, 214, 167, 0.1) 100%
+  );
+  padding: 40px;
+  border-radius: var(--radius);
+  margin-bottom: 40px;
+  border: 2px solid var(--accent);
+}
+
+.cryptobiosis-section h3 {
+  color: var(--primary-dark);
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.crypto-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.crypto-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+}
+
+.crypto-list li {
+  padding: 12px;
+  margin-bottom: 12px;
+  background: white;
+  border-radius: var(--radius-small);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+}
+
+.crypto-list li:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-medium);
+}
+
+.crypto-list li i {
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.crypto-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tun-representation {
+  text-align: center;
+}
+
+.tun-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(46, 125, 50, 0.4);
+  margin: 0 auto 16px;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tun-representation p {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Curiosidades */
+.fun-facts {
+  background: var(--bg-secondary);
+  padding: 40px;
+  border-radius: var(--radius);
+  margin-bottom: 40px;
+}
+
+.fun-facts h3 {
+  color: var(--primary-dark);
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.fact-item {
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--accent);
+}
+
+.fact-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-left-color: var(--primary);
+}
+
+.fact-emoji {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.fact-item p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.fact-item strong {
+  color: var(--primary-dark);
+}
+
+/* Call to Action Box */
+.cta-box {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  color: white;
+  padding: 40px;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow-strong);
+}
+
+.cta-box h3 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.cta-box p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .crypto-content {
+    grid-template-columns: 1fr;
+  }
+
+  .tardigrade-hero-card {
+    padding: 24px;
+  }
+
+  .hero-emoji {
+    font-size: 3rem;
+  }
+
+  .tardigrade-hero-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .tardigrade-features {
+    grid-template-columns: 1fr;
+  }
+
+  .facts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cryptobiosis-section,
+  .fun-facts,
+  .cta-box {
+    padding: 24px;
+  }
 }
 
 /* ============================================================

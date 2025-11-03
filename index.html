@@ -13,13 +13,21 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
+    <!-- Cache Control -->
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <title>TardiStudy | Portal de Estudos de Tardigrada</title>
     <meta
       name="description"
       content="TardiStudy - Portal educativo especializado no estudo de Tardigrada com mapa interativo, cadastro e chaves dicotômicas."
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=2.0.0" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link
       rel="stylesheet"
@@ -27,7 +35,7 @@
     />
     <link rel="icon" type="image/png" href="assets/tardigrade-icon.png" />
     <link rel="apple-touch-icon" href="assets/tardigrade-icon.png" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="manifest.json?v=2.0.0" />
   </head>
 
   <body>
@@ -398,16 +406,27 @@
             </div>
           </div>
 
-          <div class="key-navigation">
-            <button class="btn btn-secondary" id="path-btn">
-              <i class="fas fa-route" aria-hidden="true"></i>
-              Mostrar Caminho
-            </button>
-          </div>
-
-          <div class="path-display" id="path-display" style="display: none">
-            <h4>Caminho Percorrido</h4>
-            <ul class="path-steps" id="path-steps"></ul>
+          <!-- Histórico de Pesquisas Salvas -->
+          <div class="saved-searches" id="saved-searches">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 16px;
+              "
+            >
+              <h4 style="margin-bottom: 0">Histórico de Identificações</h4>
+              <button
+                class="btn btn-secondary"
+                id="clear-history-btn"
+                style="padding: 8px 16px; font-size: 0.9rem"
+              >
+                <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                Limpar Histórico
+              </button>
+            </div>
+            <div id="saved-searches-list"></div>
           </div>
 
           <div class="key-citation">
@@ -557,29 +576,212 @@
             <button class="back-btn" data-section="home">
               <i class="fas fa-arrow-left" aria-hidden="true"></i> Voltar
             </button>
-            <h2>Sobre os Tardígrados</h2>
+            <h2>🐻 Sobre os Tardígrados</h2>
           </div>
+          <p class="section-subtitle">
+            Os Sobreviventes Mais Resistentes do Planeta
+          </p>
         </div>
 
         <div class="about-content">
-          <div class="about-section">
-            <h3>
-              <i class="fas fa-microscope" aria-hidden="true"></i> Os "Ursos
-              d'Água"
-            </h3>
-            <p>
-              Os tardígrados são microorganismos microscópicos conhecidos como
-              os "ursos d'água" devido à sua aparência fofa e movimentos lentos.
-              Eles são considerados os organismos mais resistentes da Terra,
-              capazes de sobreviver em condições extremas incluindo:
+          <!-- Hero Card -->
+          <div class="tardigrade-hero-card">
+            <div class="hero-emoji">🦸‍♂️</div>
+            <h3>Conheça os Super-Heróis Microscópicos!</h3>
+            <p class="hero-description">
+              Tardígrados, carinhosamente chamados de
+              <strong>"ursos d'água"</strong>, são microorganismos de apenas 0,5
+              mm que possuem superpoderes dignos de ficção científica! Eles
+              sobreviveram a todas as extinções em massa da Terra e podem até
+              <strong>sobreviver no espaço</strong>! 🚀
             </p>
-            <ul>
-              <li>Temperaturas de -272°C a 151°C</li>
-              <li>Pressões até 6 vezes maior que a das fossas oceânicas</li>
-              <li>Radiação 1000 vezes maior que a letal para humanos</li>
-              <li>Vácuo do espaço por até 10 dias</li>
-              <li>Desidratação total por décadas</li>
-            </ul>
+          </div>
+
+          <!-- Cards de Características -->
+          <div class="tardigrade-features">
+            <div class="feature-card">
+              <div class="feature-icon">🌡️</div>
+              <h4>Resistência Térmica Extrema</h4>
+              <p>
+                Sobrevivem de <strong>-272°C</strong> (quase zero absoluto) até
+                <strong>+151°C</strong> (água fervendo)!
+              </p>
+              <div class="feature-detail">
+                <i class="fas fa-snowflake"></i> Suportam congelamento total
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">💪</div>
+              <h4>Pressão Impossível</h4>
+              <p>
+                Resistem a pressões <strong>6x maiores</strong> que as das
+                fossas oceânicas mais profundas!
+              </p>
+              <div class="feature-detail">
+                <i class="fas fa-water"></i> 1.200 atmosferas de pressão
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">☢️</div>
+              <h4>Radiação Letal</h4>
+              <p>
+                Toleram radiação <strong>1.000x maior</strong> que a dose letal
+                para humanos!
+              </p>
+              <div class="feature-detail">
+                <i class="fas fa-radiation"></i> Até 5.700 grays de radiação
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🚀</div>
+              <h4>Vácuo Espacial</h4>
+              <p>
+                Podem sobreviver no <strong>espaço sideral</strong> por até 10
+                dias sem proteção!
+              </p>
+              <div class="feature-detail">
+                <i class="fas fa-rocket"></i> Únicos animais a sobreviver no
+                espaço
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">💧</div>
+              <h4>Desidratação Total</h4>
+              <p>
+                Ficam <strong>30 anos sem água</strong> em estado de criptobiose
+                e voltam à vida!
+              </p>
+              <div class="feature-detail">
+                <i class="fas fa-redo"></i> Revivem em minutos com água
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">🔬</div>
+              <h4>Diversidade Incrível</h4>
+              <p>
+                Mais de <strong>1.300 espécies</strong> catalogadas em todos os
+                continentes, inclusive Antártida!
+              </p>
+              <div class="feature-detail">
+                <i class="fas fa-globe"></i> Do Himalaia ao fundo do mar
+              </div>
+            </div>
+          </div>
+
+          <!-- Seção Criptobiose -->
+          <div class="cryptobiosis-section">
+            <h3><i class="fas fa-magic"></i> O Segredo: Criptobiose</h3>
+            <div class="crypto-content">
+              <div class="crypto-text">
+                <p>
+                  Quando as condições ficam difíceis, os tardígrados entram em
+                  um estado chamado
+                  <strong>criptobiose</strong> - uma espécie de "animação
+                  suspensa". Nesse estado:
+                </p>
+                <ul class="crypto-list">
+                  <li>
+                    <i class="fas fa-pause-circle"></i>
+                    <strong>Metabolismo cai a 0,01%</strong> do normal
+                  </li>
+                  <li>
+                    <i class="fas fa-compress-arrows-alt"></i>
+                    <strong>Corpo encolhe</strong> e forma um "barril" (tun)
+                  </li>
+                  <li>
+                    <i class="fas fa-tint-slash"></i>
+                    <strong>Perdem 99% da água</strong> corporal
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt"></i> Produzem
+                    <strong>proteínas protetoras</strong> especiais
+                  </li>
+                  <li>
+                    <i class="fas fa-infinity"></i> Podem ficar assim por
+                    <strong>décadas</strong>!
+                  </li>
+                </ul>
+              </div>
+              <div class="crypto-visual">
+                <div class="tun-representation">
+                  <div class="tun-circle">TUN</div>
+                  <p>Estado de Criptobiose</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Curiosidades -->
+          <div class="fun-facts">
+            <h3><i class="fas fa-lightbulb"></i> Curiosidades Fascinantes</h3>
+            <div class="facts-grid">
+              <div class="fact-item">
+                <span class="fact-emoji">🌙</span>
+                <p>
+                  <strong>Foram à Lua!</strong> Em 2019, uma sonda israelense
+                  com tardígrados caiu na Lua. Eles podem estar vivos lá até
+                  hoje!
+                </p>
+              </div>
+              <div class="fact-item">
+                <span class="fact-emoji">🦠</span>
+                <p>
+                  <strong>Não são insetos!</strong> São um filo próprio
+                  (Tardigrada) mais relacionado aos artrópodes.
+                </p>
+              </div>
+              <div class="fact-item">
+                <span class="fact-emoji">👀</span>
+                <p>
+                  <strong>Olhos simples:</strong> Têm até 5 olhos (ocelos) que
+                  detectam luz, mas não formam imagens.
+                </p>
+              </div>
+              <div class="fact-item">
+                <span class="fact-emoji">🍽️</span>
+                <p>
+                  <strong>Dieta variada:</strong> Comem células de plantas,
+                  algas, pequenos invertebrados e até outros tardígrados!
+                </p>
+              </div>
+              <div class="fact-item">
+                <span class="fact-emoji">🚶</span>
+                <p>
+                  <strong>8 perninhas:</strong> Possuem 4 pares de patas curtas
+                  com garras, usadas para se agarrar.
+                </p>
+              </div>
+              <div class="fact-item">
+                <span class="fact-emoji">⏰</span>
+                <p>
+                  <strong>Velocidade:</strong> Se movem a incríveis 0,5 mm por
+                  segundo - ultra lentos!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Call to Action -->
+          <div class="cta-box">
+            <h3>🔍 Quer Encontrar Tardígrados?</h3>
+            <p>
+              Eles estão em TODOS os lugares! Musgos, líquens, folhas, solo,
+              lagos... Qualquer lugar úmido pode ser o lar de centenas de
+              tardígrados!
+            </p>
+            <button
+              class="btn btn-primary"
+              data-section="identificacao"
+              onclick="showSection('identificacao')"
+              style="margin-top: 16px"
+            >
+              <i class="fas fa-search"></i> Comece a Identificar
+            </button>
           </div>
         </div>
       </section>
@@ -816,6 +1018,6 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/pt-br.min.js"></script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=2.0.0" defer></script>
   </body>
 </html>
