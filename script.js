@@ -611,12 +611,12 @@ const keySteps = {
       {
         text: "1. Cirro mediano geralmente presente; dígitos ou garras inseridos diretamente na perna.",
         next: "arthrotardigrada_result",
-        image: "assets/fig2.jpg",
+        image: "assets/fig2.png",
       },
       {
         text: "1'. Cirro mediano ausente; cada garra e uma papila inserida na perna.",
         next: "echiniscoidea_familias",
-        image: "assets/key-images/fig2-echiniscoidea.jpg",
+        image: "assets/fig3.png",
       },
     ],
   },
@@ -639,12 +639,12 @@ const keySteps = {
       {
         text: "1. Quatro garras por perna em adultos; com placas dorsais-laterais.",
         next: "echiniscidae_generos_1",
-        image: "assets/key-images/fig3-4garras-placas.jpg",
+        image: "assets/fig4.png",
       },
       {
         text: "1'. Duas garras nas pernas I–III, uma garra na perna IV em adultos; cutícula sem placas dorsais.",
         next: "carphaniidae_result",
-        image: "assets/key-images/fig3-2garras-sem-placas.jpg",
+        image: "assets/key-images/fig3-duas-garras.jpg",
       },
     ],
   },
@@ -655,7 +655,7 @@ const keySteps = {
     result: "Gênero Carphania",
     description:
       "Um gênero: Carphania. Duas garras nas pernas I–III, uma garra na perna IV; cutícula sem placas dorsais; cirrus A muito curto.",
-    image: "assets/tardigrade-icon.png",
+    image: "assets/key-results/Carphania.jpg",
   },
 
   // FAMÍLIA ECHINISCIDAE: Chave para gêneros
@@ -681,7 +681,7 @@ const keySteps = {
     result: "Gênero Pseudechiniscus",
     description:
       "Placa pseudosegmentar presente entre a segunda placa em pares e a placa terminal (Fig. 4).",
-    image: "assets/key-results/Pseudechiniscus.jpg",
+    image: "assets/Pseudechiniscus.png",
   },
 
   echiniscidae_generos_2: {
@@ -691,12 +691,12 @@ const keySteps = {
       {
         text: "2. Placa terminal entalhada.",
         next: "echiniscus_result",
-        image: "assets/key-images/fig5-placa-entalhada.jpg",
+        image: "assets/placa-entalhada.png",
       },
       {
         text: "2'. Placa terminal dividida por suturas; olhos em manchas pretas.",
         next: "hypechiniscus_result",
-        image: "assets/key-images/fig5-placa-dividida.jpg",
+        image: "assets/placa-dividida.png",
       },
     ],
   },
@@ -705,7 +705,7 @@ const keySteps = {
     title: "Resultado: Gênero Echiniscus",
     result: "Gênero Echiniscus",
     description: "Placa terminal entalhada (Fig. 5).",
-    image: "assets/key-results/Echiniscus.jpg",
+    image: "assets/Echiniscus.png",
   },
 
   hypechiniscus_result: {
@@ -733,7 +733,7 @@ const keySteps = {
       {
         text: "1'. Cabeça com papilas cefálicas (incluindo duas papilas laterais); ganchos com ramo secundário não conectado ao primário.",
         next: "milnesium_result",
-        image: "assets/key-images/fig6-com-papilas.jpg",
+        image: "assets/papilas.png",
       },
     ],
   },
@@ -1530,7 +1530,7 @@ const tardigradeStructures = [
     name: "Papilas Cefálicas",
     description:
       "Pequenas protuberâncias sensoriais na cabeça, características da Ordem Apochela (ex: Milnesium).",
-    image: "assets/key-images/apochela-cabeca.jpg",
+    image: "papilas.png",
   },
   {
     id: "garras-assimetricas",
@@ -1558,21 +1558,21 @@ const tardigradeStructures = [
     name: "Garras Tipo V ou L (Murrayidae)",
     description:
       "Garras onde os ramos divergem diretamente da base, sem um trecho fundido, formando um 'V' ou 'L'.",
-    image: "assets/key-images/garras-V-L.jpg",
+    image: "assets/fig8.png",
   },
   {
     id: "garras-tipo-isohypsibius",
     name: "Garras Tipo Isohypsibius",
     description:
       "Garras onde o ramo secundário forma um ângulo reto (ou maior) com a base da garra.",
-    image: "assets/key-images/garras-isohypsibius.jpg",
+    image: "assets/fig9.png",
   },
   {
     id: "garras-tipo-hypsibius",
     name: "Garras Tipo Hypsibius",
     description:
       "Garras externas onde o ramo secundário forma um arco comum com a porção basal.",
-    image: "assets/key-images/garras-hypsibius.jpg",
+    image: "assets/fig10.png",
   },
   {
     id: "lamina-ventral",
