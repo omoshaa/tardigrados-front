@@ -55,6 +55,10 @@ Header set Cache-Control "no-cache, must-revalidate"
 
 # ===================================
 
+# COMPRESSÃO GZIP
+
+# ===================================
+
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html
   AddOutputFilterByType DEFLATE text/css

@@ -28,10 +28,18 @@
     />
 
     <link rel="stylesheet" href="style.css?v=2.0.0" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
     <link rel="icon" type="image/png" href="assets/tardigrade-icon.png" />
     <link rel="apple-touch-icon" href="assets/tardigrade-icon.png" />
@@ -283,6 +291,8 @@
                 name="latitude"
                 placeholder="Latitude"
                 step="any"
+                min="-90"
+                max="90"
                 required
               />
               <label for="longitude" class="sr-only">Longitude</label>
@@ -292,6 +302,8 @@
                 name="longitude"
                 placeholder="Longitude"
                 step="any"
+                min="-180"
+                max="180"
                 required
               />
               <button
@@ -794,7 +806,7 @@
             </button>
             <h2>Sobre o Projeto PUNE</h2>
           </div>
-          <p class="section-subtitle">Projeto Urso Na Escola</p>
+          <h3 class="project-subtitle-green">Projeto Urso Na Escola</h3>
         </div>
 
         <div class="about-content">
@@ -903,31 +915,6 @@
 
               <div class="team-member">
                 <div class="member-icon">
-                  <i class="fas fa-user-graduate" aria-hidden="true"></i>
-                </div>
-                <h4>Estudantes Colaboradores</h4>
-                <p class="member-name">Daniel Mizael Spagiari de Souza</p>
-                <p class="member-info">
-                  Estudante do PUNE<br />
-                  Contribuidor de dados - Campinas, SP
-                </p>
-              </div>
-
-              <div class="team-member">
-                <div class="member-icon">
-                  <i class="fas fa-users" aria-hidden="true"></i>
-                </div>
-                <h4>Escolas Parceiras</h4>
-                <p class="member-name">Alunos Participantes</p>
-                <p class="member-info">
-                  EE Prof. Aprígio Gonzaga (SP)<br />
-                  EE Julio de Mesquita (Campinas)<br />
-                  EE Maria de Lourdes (Campinas)
-                </p>
-              </div>
-
-              <div class="team-member">
-                <div class="member-icon">
                   <i class="fas fa-microscope" aria-hidden="true"></i>
                 </div>
                 <h4>Consultoria Científica</h4>
@@ -952,6 +939,134 @@
                 </p>
               </div>
             </div>
+
+            <!-- Seção Destacada dos Estudantes PUNE -->
+            <div class="pune-students-section">
+              <div class="pune-header">
+                <div class="pune-badge">
+                  <i class="fas fa-star" aria-hidden="true"></i>
+                </div>
+                <h3>Estudantes do Projeto PUNE</h3>
+                <p class="pune-subtitle">
+                  Jovens do ensino médio explorando o fascinante mundo dos
+                  tardígrados através da ciência e tecnologia
+                </p>
+              </div>
+
+              <div class="team-grid pune-grid">
+                <div class="team-member pune-student">
+                  <div class="member-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                  </div>
+                  <h4>Estudante PUNE</h4>
+                  <p class="member-name">Gabriel Paschoa Ranuzia Marciel</p>
+                  <p class="member-info">Aluno do ensino médio</p>
+                </div>
+
+                <div class="team-member pune-student">
+                  <div class="member-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                  </div>
+                  <h4>Estudante PUNE</h4>
+                  <p class="member-name">
+                    Giovanna Emanuelle da Silva Masson Bassanin
+                  </p>
+                  <p class="member-info">Aluna do ensino médio</p>
+                </div>
+
+                <div class="team-member pune-student">
+                  <div class="member-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                  </div>
+                  <h4>Estudante PUNE</h4>
+                  <p class="member-name">Davi Bernardes Soldeira</p>
+                  <p class="member-info">Aluno do ensino médio</p>
+                </div>
+
+                <div class="team-member pune-student">
+                  <div class="member-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                  </div>
+                  <h4>Estudante PUNE</h4>
+                  <p class="member-name">Daniel Mizael Spagiari de Souza</p>
+                  <p class="member-info">Aluno do ensino médio</p>
+                </div>
+
+                <div class="team-member pune-student">
+                  <div class="member-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                  </div>
+                  <h4>Estudante PUNE</h4>
+                  <p class="member-name">Sophia Clemente Marcelino</p>
+                  <p class="member-info">Aluna do ensino médio</p>
+                </div>
+
+                <div class="team-member pune-student">
+                  <div class="member-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                  </div>
+                  <h4>Estudante PUNE</h4>
+                  <p class="member-name">Ana Lívia Rodrigues</p>
+                  <p class="member-info">Aluna do ensino médio</p>
+                </div>
+
+                <div
+                  class="team-member pune-student"
+                  style="
+                    border: 2px solid var(--accent);
+                    background: linear-gradient(
+                      135deg,
+                      rgba(129, 199, 132, 0.08) 0%,
+                      rgba(165, 214, 167, 0.05) 100%
+                    );
+                  "
+                >
+                  <div class="member-icon">
+                    <i class="fas fa-code" aria-hidden="true"></i>
+                  </div>
+                  <h4>Programador & Estudante PUNE</h4>
+                  <p class="member-name">Moisés Filipe Telis de Lima</p>
+                  <p class="member-info">
+                    Aluno do ensino médio • Desenvolvedor Web
+                  </p>
+                </div>
+              </div>
+
+              <div class="pune-footer">
+                <p class="pune-message">
+                  <i class="fas fa-heart" aria-hidden="true"></i>
+                  Estes jovens estudantes do ensino médio representam o futuro
+                  da pesquisa científica e tecnológica em Tardigrada no Brasil
+                </p>
+              </div>
+            </div>
+
+            <!-- Escolas Parceiras -->
+            <div class="schools-section">
+              <h4
+                style="
+                  text-align: center;
+                  color: var(--primary);
+                  margin: 32px 0 20px;
+                "
+              >
+                <i class="fas fa-school"></i> Escolas Parceiras
+              </h4>
+              <div class="schools-grid">
+                <div class="school-item">
+                  <i class="fas fa-graduation-cap"></i>
+                  <p>EE Prof. Aprígio Gonzaga (SP)</p>
+                </div>
+                <div class="school-item">
+                  <i class="fas fa-graduation-cap"></i>
+                  <p>EE Julio de Mesquita (Campinas)</p>
+                </div>
+                <div class="school-item">
+                  <i class="fas fa-graduation-cap"></i>
+                  <p>EE Maria de Lourdes (Campinas)</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="about-section">
@@ -959,22 +1074,34 @@
               <i class="fas fa-code" aria-hidden="true"></i>
             </div>
             <h3>Tecnologias Utilizadas</h3>
+            <p
+              style="
+                text-align: center;
+                color: var(--text-secondary);
+                margin-bottom: 24px;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+              "
+            >
+              Ferramentas modernas que tornam este portal interativo e educativo
+            </p>
             <div class="tech-grid">
               <div class="tech-item">
                 <i class="fab fa-html5" aria-hidden="true"></i>
-                <span>HTML5</span>
+                <span>HTML5 - Estrutura Semântica</span>
               </div>
               <div class="tech-item">
                 <i class="fab fa-css3-alt" aria-hidden="true"></i>
-                <span>CSS3</span>
+                <span>CSS3 - Design Responsivo</span>
               </div>
               <div class="tech-item">
                 <i class="fab fa-js" aria-hidden="true"></i>
-                <span>JavaScript</span>
+                <span>JavaScript - Interatividade</span>
               </div>
               <div class="tech-item">
                 <i class="fas fa-map" aria-hidden="true"></i>
-                <span>Leaflet.js</span>
+                <span>Leaflet.js - Mapas Interativos</span>
               </div>
             </div>
           </div>
@@ -984,9 +1111,20 @@
               <i class="fas fa-envelope" aria-hidden="true"></i>
             </div>
             <h3>Entre em Contato</h3>
-            <p>
-              Para mais informações sobre o projeto TardiStudy, colaborações ou
-              dúvidas:
+            <p
+              style="
+                text-align: center;
+                color: var(--text-secondary);
+                margin-bottom: 32px;
+                font-size: 1.1rem;
+                max-width: 700px;
+                margin-left: auto;
+                margin-right: auto;
+              "
+            >
+              Tem dúvidas sobre tardígrados? Quer participar do projeto?
+              <br />Entre em contato conosco! Estamos sempre abertos a
+              colaborações e novos pesquisadores.
             </p>
             <div class="contact-info">
               <div class="contact-item">
@@ -1015,9 +1153,29 @@
 
     <div id="notification"></div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/pt-br.min.js"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"
+      integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/pt-br.min.js"
+      integrity="sha512-X7bJg34SQ+yHcUb+MJbNC1QOL8Z4bV6ETkKbBLF+gRV7cWzcKfEAyqmpqS8r6P9VoJMEYlL4xgHi4NXbQ/jvLA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- Botão Voltar ao Topo -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Voltar ao topo">
+      <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
     <script src="script.js?v=2.0.0" defer></script>
   </body>
 </html>

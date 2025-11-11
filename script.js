@@ -14,9 +14,7 @@ function checkCacheVersion() {
 
   if (storedVersion !== APP_VERSION) {
     // Nova versão detectada - limpa o cache
-    console.log(
-      `Atualizando de ${storedVersion || "versão antiga"} para ${APP_VERSION}`
-    );
+    // Atualizando versão do cache
 
     // Limpa localStorage seletivamente (mantém os registros de tardigrada)
     const tardiRecords = localStorage.getItem("tardiRecords");
@@ -363,7 +361,6 @@ function loadSavedSearches() {
     try {
       savedSearches = JSON.parse(saved);
     } catch (e) {
-      console.error("Erro ao carregar histórico de pesquisas:", e);
       savedSearches = [];
     }
   }
@@ -546,12 +543,10 @@ function clearAllSearches() {
 // ============================================================
 function initMap() {
   if (typeof L === "undefined") {
-    // console.log("Leaflet não está carregado");
     return;
   }
   const mapElement = document.getElementById("map");
   if (!mapElement) {
-    // console.log("Elemento do mapa não encontrado");
     return;
   }
   try {
@@ -567,9 +562,8 @@ function initMap() {
       renderMarkers();
       map.invalidateSize();
     }, 500);
-    // console.log("Mapa inicializado com sucesso");
   } catch (error) {
-    // console.error("Erro ao inicializar o mapa:", error);
+    // Erro ao inicializar mapa
   }
 }
 
@@ -723,12 +717,27 @@ function handleFormSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const genero = formData.get("genero");
+
+  // Validação de coordenadas
+  const latitude = parseFloat(formData.get("latitude"));
+  const longitude = parseFloat(formData.get("longitude"));
+
+  if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+    showNotification("Latitude deve estar entre -90 e 90", "danger");
+    return;
+  }
+
+  if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+    showNotification("Longitude deve estar entre -180 e 180", "danger");
+    return;
+  }
+
   const taxonomia = GENUS_TAXONOMY_MAP[genero] || GENUS_TAXONOMY_MAP["Outro"];
 
   const newRecord = {
     id: generateId(),
-    latitude: parseFloat(formData.get("latitude")),
-    longitude: parseFloat(formData.get("longitude")),
+    latitude: latitude,
+    longitude: longitude,
 
     // Preenchido automaticamente pelo GENUS_TAXONOMY_MAP
     classe: taxonomia.classe,
@@ -785,35 +794,169 @@ function getLocation() {
   }
 }
 
-// NOVO: Função para preview de imagens
+// ============================================================
+// PREVIEW DE IMAGENS PREMIUM - COM ZOOM E REMOÇÃO INDIVIDUAL
+// ============================================================
+let uploadedFiles = []; // Array para armazenar arquivos
+
 function handleImagePreview(event) {
   const previewContainer = document.getElementById("image-preview");
   if (!previewContainer) return;
 
-  previewContainer.innerHTML = ""; // Limpa previews anteriores
+  const files = Array.from(event.target.files);
 
-  const files = event.target.files;
-  if (files.length > 5) {
-    showNotification("Você só pode enviar até 5 fotos.", "error");
-    event.target.value = ""; // Limpa a seleção
+  // Limita a 5 fotos no total
+  if (uploadedFiles.length + files.length > 5) {
+    showNotification("Você só pode enviar até 5 fotos no total.", "error");
+    event.target.value = "";
     return;
   }
 
-  for (const file of files) {
-    if (!file.type.startsWith("image/")) continue;
+  // Adiciona os novos arquivos ao array
+  uploadedFiles = [...uploadedFiles, ...files];
+
+  // Renderiza todos os previews
+  renderPreviews(previewContainer);
+
+  // Limpa o input para permitir selecionar as mesmas fotos novamente
+  event.target.value = "";
+}
+
+function renderPreviews(container) {
+  container.innerHTML = ""; // Limpa previews anteriores
+
+  uploadedFiles.forEach((file, index) => {
+    if (!file.type.startsWith("image/")) return;
 
     const reader = new FileReader();
 
     reader.onload = function (e) {
+      // Cria o card do preview
+      const previewItem = document.createElement("div");
+      previewItem.classList.add("preview-item");
+      previewItem.setAttribute("data-index", index);
+
+      // Imagem
       const img = document.createElement("img");
       img.src = e.target.result;
-      img.alt = "Preview da imagem";
-      img.classList.add("preview-image"); // (Estilo será adicionado no CSS)
-      previewContainer.appendChild(img);
+      img.alt = file.name;
+
+      // Botão de remover
+      const removeBtn = document.createElement("button");
+      removeBtn.classList.add("remove-photo-btn");
+      removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+      removeBtn.setAttribute("aria-label", `Remover ${file.name}`);
+      removeBtn.onclick = (e) => {
+        e.stopPropagation();
+        removePhoto(index);
+      };
+
+      // Botão de zoom
+      const zoomBtn = document.createElement("button");
+      zoomBtn.classList.add("zoom-photo-btn");
+      zoomBtn.innerHTML = '<i class="fas fa-search-plus"></i>';
+      zoomBtn.setAttribute("aria-label", `Visualizar ${file.name}`);
+      zoomBtn.onclick = (e) => {
+        e.stopPropagation();
+        showImageModal(e.target.result, file.name);
+      };
+
+      // Nome do arquivo
+      const filename = document.createElement("div");
+      filename.classList.add("preview-filename");
+      filename.textContent = file.name;
+
+      // Monta o card
+      previewItem.appendChild(img);
+      previewItem.appendChild(removeBtn);
+      previewItem.appendChild(zoomBtn);
+      previewItem.appendChild(filename);
+
+      container.appendChild(previewItem);
     };
 
     reader.readAsDataURL(file);
-  }
+  });
+}
+
+function removePhoto(index) {
+  uploadedFiles.splice(index, 1);
+  const previewContainer = document.getElementById("image-preview");
+  renderPreviews(previewContainer);
+  showNotification("Foto removida com sucesso!", "success");
+}
+
+function showImageModal(imageSrc, imageName) {
+  // Cria um modal simples para visualização
+  const modal = document.createElement("div");
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    cursor: zoom-out;
+    animation: fadeIn 0.3s ease;
+  `;
+
+  const img = document.createElement("img");
+  img.src = imageSrc;
+  img.alt = imageName;
+  img.style.cssText = `
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease;
+  `;
+
+  const closeBtn = document.createElement("button");
+  closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  `;
+
+  closeBtn.onmouseover = () => {
+    closeBtn.style.background = "rgba(244, 67, 54, 0.9)";
+    closeBtn.style.transform = "rotate(90deg) scale(1.1)";
+  };
+
+  closeBtn.onmouseout = () => {
+    closeBtn.style.background = "rgba(255, 255, 255, 0.2)";
+    closeBtn.style.transform = "rotate(0deg) scale(1)";
+  };
+
+  const closeModal = () => {
+    modal.style.animation = "fadeOut 0.3s ease";
+    setTimeout(() => modal.remove(), 300);
+  };
+
+  modal.onclick = closeModal;
+  closeBtn.onclick = closeModal;
+  img.onclick = (e) => e.stopPropagation();
+
+  modal.appendChild(img);
+  modal.appendChild(closeBtn);
+  document.body.appendChild(modal);
 }
 
 // CHAVE DICOTÔMICA COMPLETA - TARDIGRADA
@@ -1430,7 +1573,6 @@ const keySteps = {
 function nextStep(stepId) {
   const step = keySteps[stepId];
   if (!step) {
-    // console.error("Passo da chave não encontrado:", stepId);
     return;
   }
 
@@ -1496,7 +1638,6 @@ function showStep(step) {
   `;
 }
 
-// (Função showResult ATUALIZADA para incluir "Parabéns!" e salvar no histórico)
 function showResult(step) {
   document.getElementById("key-step").style.display = "none";
   document.getElementById("key-result").style.display = "block";
@@ -1545,8 +1686,6 @@ function resetKey() {
   // Mostra o primeiro passo
   if (keySteps[currentStep]) {
     showStep(keySteps[currentStep]);
-  } else {
-    // console.error("Passo inicial '1' não encontrado na chave.");
   }
 }
 
@@ -1932,6 +2071,30 @@ function init() {
   const fotoInput = document.getElementById("foto");
   if (fotoInput) {
     fotoInput.addEventListener("change", handleImagePreview);
+  }
+
+  // ============================================================
+  // BOTÃO VOLTAR AO TOPO - EVENT LISTENERS
+  // ============================================================
+  const scrollToTopBtn = document.getElementById("scrollToTop");
+
+  // Mostrar/esconder botão baseado no scroll
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add("visible");
+    } else {
+      scrollToTopBtn.classList.remove("visible");
+    }
+  });
+
+  // Scroll suave ao clicar
+  if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    });
   }
 
   // Event Listener para Filtro de Classes (Mapa)
